@@ -22,6 +22,7 @@ public class CardCategory extends BaseEntity{
     @JoinColumn(name = "card_id", nullable = false)
     private Card card;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="name", nullable = false)
     private CardCategoryType categoryType;
 
