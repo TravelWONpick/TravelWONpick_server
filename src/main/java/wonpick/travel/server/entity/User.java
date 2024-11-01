@@ -32,10 +32,10 @@ public class User extends BaseEntity {
     @Column
     private Boolean notification;
 
-    @OneToMany(mappedBy = "userPassenger", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserPassenger> userPassengers;
 
-    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations;
 
 }

@@ -43,9 +43,9 @@ public class Card extends BaseEntity {
     @Column(nullable = false)
     private CardType type;
 
-    @OneToMany(mappedBy = "cardBenefit", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CardBenefit> cardBenefits;
 
-    @OneToMany(mappedBy = "cardCategory", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CardCategory> cardCategories;
 }
