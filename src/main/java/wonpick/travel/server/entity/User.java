@@ -39,5 +39,3 @@ public class User extends BaseEntity {
     private List<Reservation> reservations;
 
 }
-
-
