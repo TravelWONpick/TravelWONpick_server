@@ -1,7 +1,10 @@
 package wonpick.travel.server.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
+import wonpick.travel.server.controller.CardController;
 import wonpick.travel.server.dto.CardBenefitDTO;
 import wonpick.travel.server.dto.CardDTO;
 import wonpick.travel.server.dto.CategoryDTO;
@@ -18,8 +21,7 @@ public class CardService {
     private final CardRepository cardRepository;
 
     public List<CardDTO> getAllCards() {
-        List<Card> cards = cardRepository.findAll();
-
+        List<Card> cards = cardRepository.findAllWithCategoriesAndBenefits();
         return cards.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 

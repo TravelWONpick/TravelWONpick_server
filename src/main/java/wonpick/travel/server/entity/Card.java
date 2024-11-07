@@ -2,12 +2,13 @@ package wonpick.travel.server.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wonpick.travel.server.entity.enums.CardType;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -43,8 +44,8 @@ public class Card extends BaseEntity {
     private CardType type;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<CardBenefit> cardBenefits;
+    private Set<CardBenefit> cardBenefits = new HashSet<>();
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<CardCategory> cardCategories;
+    private Set<CardCategory> cardCategories = new HashSet<>();
 }

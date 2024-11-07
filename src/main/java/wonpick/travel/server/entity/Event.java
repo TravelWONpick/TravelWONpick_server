@@ -21,17 +21,17 @@ public class Event extends BaseEntity {
     private Long id;
 
     @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
     private String image;
 
     @Column(name = "p_image", nullable = false)
-    private String pImage;
+    private String previewImage;
 
     @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;
 
     @Column(name = "end_date", nullable = false)
     private LocalDateTime endDate;
-
-    @Column(nullable = false)
-    private String state;
 }
