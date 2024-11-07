@@ -10,7 +10,6 @@ import wonpick.travel.server.entity.enums.CardType;
 import java.util.List;
 
 @Entity
-@Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,9 +42,9 @@ public class Card extends BaseEntity {
     @Column(nullable = false)
     private CardType type;
 
-    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CardBenefit> cardBenefits;
 
-    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CardCategory> cardCategories;
 }

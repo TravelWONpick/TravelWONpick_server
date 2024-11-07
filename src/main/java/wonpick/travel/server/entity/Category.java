@@ -7,21 +7,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wonpick.travel.server.entity.enums.CardCategoryType;
 
+import java.util.List;
+
 @Entity
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CardCategory {
+public class Category extends BaseEntity {
+
     @Id
-    @Column(name = "cc_id", nullable = false)
+    @Column(name = "category_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "card_id", nullable = false)
-    private Card card;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, unique = true)
+    private CardCategoryType type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CardCategory> cardCategories;
 }
