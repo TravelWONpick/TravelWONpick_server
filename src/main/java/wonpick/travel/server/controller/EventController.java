@@ -1,0 +1,98 @@
+package wonpick.travel.server.controller;
+
+import wonpick.travel.server.dto.*;
+import wonpick.travel.server.dto.BaseResponse;
+import wonpick.travel.server.entity.Event;
+import wonpick.travel.server.service.EventService;
+import wonpick.travel.server.service.S3Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/events")
+public class EventController {
+
+    private final EventService eventService;
+    private final S3Service s3Service;
+
+    @Autowired
+    public EventController(EventService eventService, S3Service s3Service) {
+        this.eventService = eventService;
+        this.s3Service = s3Service;
+    }
+
+    // 전체 이벤트 목록 조회
+    @GetMapping
+    public ResponseEntity<BaseResponse<GetEventListResponse>> getAllEvents() {
+        List<EventDTO> eventList = eventService.getAllEvents();
+        GetEventListResponse response = new GetEventListResponse();
+        response.setEvents(eventList);
+
+        return ResponseEntity.ok(BaseResponse.success(response));
+    }
+
+    // ID 기준 상세 게시글 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<BaseResponse<EventDetailDTO>> getEventById(@PathVariable Long id) {
+        try {
+            EventDetailDTO eventDetail = eventService.getEventById(id);
+            return ResponseEntity.ok(BaseResponse.success(eventDetail));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(BaseResponse.failure("Event not found: " + e.getMessage()));
+        }
+    }
+
+    // 게시글 생성
+    @PostMapping(consumes = "multipart/form-data")
+    public ResponseEntity<BaseResponse<PostEventResponse>> createEvent(
+            @ModelAttribute PostEventRequest request) {
+        try {
+            // S3에 이미지 파일 업로드
+            String imageUrl = s3Service.uploadFile(request.getImage());
+            String previewImageUrl = s3Service.uploadFile(request.getPreviewImage());
+
+            // Event 엔티티 생성
+            Event event = Event.builder()
+                    .title(request.getTitle())
+                    .image(imageUrl)                // S3에서 받은 이미지 URL 설정
+                    .previewImage(previewImageUrl)  // S3에서 받은 미리보기 이미지 URL 설정
+                    .startDate(request.getStartDate())
+                    .endDate(request.getEndDate())
+                    .build();
+
+            Event createdEvent = eventService.createEvent(event);
+
+            // 성공 응답
+            PostEventResponse responseDTO = new PostEventResponse(createdEvent.getId());
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(BaseResponse.success(responseDTO));
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(BaseResponse.failure("Failed to create event: " + e.getMessage()));
+        }
+    }
+
+
+    // 게시글 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BaseResponse<Void>> deleteEvent(@PathVariable Long id) {
+        try {
+            eventService.deleteEvent(id);
+            // 삭제 성공 응답
+            return ResponseEntity.ok(BaseResponse.success(null));
+        } catch (Exception e) {
+            // 삭제 실패 응답
+            String errorMessage = "Failed to delete event: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(BaseResponse.failure(errorMessage));
+        }
+    }
+}

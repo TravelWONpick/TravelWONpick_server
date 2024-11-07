@@ -5,6 +5,15 @@ spring:
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  profiles:
+    include: s3
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
   jpa:
     hibernate:
       ddl-auto: none
@@ -23,3 +32,4 @@ logging:
     name: /app/logs/travelwonpick.log
   pattern:
     file: '%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n'
+
