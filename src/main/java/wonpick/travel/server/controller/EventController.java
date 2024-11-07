@@ -1,5 +1,7 @@
 package wonpick.travel.server.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import wonpick.travel.server.dto.*;
 import wonpick.travel.server.dto.BaseResponse;
 import wonpick.travel.server.entity.Event;
@@ -20,6 +22,7 @@ public class EventController {
 
     private final EventService eventService;
     private final S3Service s3Service;
+    private static final Logger logger = LogManager.getLogger(EventController.class);
 
     @Autowired
     public EventController(EventService eventService, S3Service s3Service) {
@@ -30,6 +33,7 @@ public class EventController {
     // 전체 이벤트 목록 조회
     @GetMapping
     public ResponseEntity<BaseResponse<GetEventListResponse>> getAllEvents() {
+        logger.info("[travelwonpick] 이벤트 목록 조회");
         List<EventDTO> eventList = eventService.getAllEvents();
         GetEventListResponse response = new GetEventListResponse();
         response.setEvents(eventList);
@@ -40,6 +44,7 @@ public class EventController {
     // ID 기준 상세 게시글 조회
     @GetMapping("/{id}")
     public ResponseEntity<BaseResponse<EventDetailDTO>> getEventById(@PathVariable Long id) {
+        logger.info("[travelwonpick] 상세 게시글 조회");
         try {
             EventDetailDTO eventDetail = eventService.getEventById(id);
             return ResponseEntity.ok(BaseResponse.success(eventDetail));
@@ -53,6 +58,7 @@ public class EventController {
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<BaseResponse<PostEventResponse>> createEvent(
             @ModelAttribute PostEventRequest request) {
+        logger.info("[travelwonpick] 게시글 생성");
         try {
             // S3에 이미지 파일 업로드
             String imageUrl = s3Service.uploadFile(request.getImage());
@@ -84,6 +90,7 @@ public class EventController {
     // 게시글 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse<Void>> deleteEvent(@PathVariable Long id) {
+        logger.info("[travelwonpick] 게시글 삭제");
         try {
             eventService.deleteEvent(id);
             // 삭제 성공 응답
