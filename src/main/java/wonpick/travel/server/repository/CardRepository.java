@@ -8,7 +8,10 @@ import wonpick.travel.server.entity.User;
 import java.util.List;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
-    @Query("SELECT c FROM Card c LEFT JOIN FETCH c.cardBenefits")
-    List<Card> findAllWithBenefits();
-}
 
+    @Query("SELECT DISTINCT c FROM Card c " +
+            "LEFT JOIN FETCH c.cardBenefits " +
+            "LEFT JOIN FETCH c.cardCategories cc " +
+            "LEFT JOIN FETCH cc.category")
+    List<Card> findAllWithCategoriesAndBenefits();
+}

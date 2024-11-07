@@ -22,7 +22,7 @@ public class CardController {
     @GetMapping("/cards")
     public ResponseEntity<GetCardListResponse> getCard(){
         log.debug("[CardController.getCard]");
-        List<CardDTO> cards = cardService.getAllCardsWithBenefits();
+        List<CardDTO> cards = cardService.getAllCards();
 
         return ResponseEntity.ok(new GetCardListResponse(cards));
     }
