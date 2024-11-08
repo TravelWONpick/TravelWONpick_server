@@ -6,7 +6,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   profiles:
-    include: s3
+    include: s3, cognito
 
   servlet:
     multipart:
@@ -33,3 +33,12 @@ logging:
   pattern:
     file: '%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n'
 
+cloud:
+  aws:
+    credentials:
+      access-key: AWS_ACCESS_KEY
+      secret-key: AWS_SECRET_ACCESS_KEY
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

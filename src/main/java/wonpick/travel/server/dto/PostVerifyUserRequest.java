@@ -3,7 +3,8 @@ package wonpick.travel.server.dto;
 import lombok.Data;
 
 @Data
-public class PostLoginUserRequest {
+public class PostVerifyUserRequest {
     private String email;
     private String password;
+    private String name;
 }
