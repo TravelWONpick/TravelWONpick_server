@@ -44,6 +44,12 @@ public class SpecialPricePick extends BaseEntity {
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
+    @Column(name="departure_airport_code", nullable = false, length=20)
+    private String depAirportCode;
+
+    @Column(name="arrival_airport_code", nullable = false, length=20)
+    private String arrAirportCode;
+
     // Flight 엔티티와의 일대다 관계 설정
     @OneToMany(mappedBy = "specialPricePick", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Flight> flights;
