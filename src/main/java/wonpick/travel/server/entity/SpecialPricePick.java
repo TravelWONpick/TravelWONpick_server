@@ -38,9 +38,6 @@ public class SpecialPricePick extends BaseEntity {
     @Column(name = "close_time", nullable = false)
     private LocalDateTime closeTime;
 
-    @Column(name = "state", nullable = false)
-    private String state;
-
     @Column(name = "category", nullable = false, length = 20)
     private String category;
 
