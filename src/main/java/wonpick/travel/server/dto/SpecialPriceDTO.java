@@ -16,5 +16,6 @@ public class SpecialPriceDTO {
     private LocalDateTime openTime;
     private LocalDateTime closeTime;
     private String category;
-    private List<FlightDTO> flights;
+    private Integer minPrice;
+//    private List<FlightDTO> flights;
 }
