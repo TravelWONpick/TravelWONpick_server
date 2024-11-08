@@ -3,6 +3,7 @@ package wonpick.travel.server.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import wonpick.travel.server.dto.FlightDTO;
 import wonpick.travel.server.entity.Flight;
 
 import java.time.LocalDateTime;
@@ -34,4 +35,16 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
             @Param("minPrice") int minPrice,
             @Param("maxPrice") int maxPrice
     );
+
+
+    @Query("SELECT f FROM Flight f " +
+            "WHERE f.specialPricePick.id = :spId " +
+            "AND f.departureAirportCode = :departureAirportCode " +
+            "AND f.arrivalAirportCode = :arrivalAirportCode " +
+            "AND f.departureTime BETWEEN :startOfDay AND :endOfDay")
+    List<Flight> findFlightsByDateAndLocation(@Param("spId") Long spId,
+                                              @Param("departureAirportCode") String departureAirportCode,
+                                              @Param("arrivalAirportCode") String arrivalAirportCode,
+                                              @Param("startOfDay") LocalDateTime startOfDay,
+                                              @Param("endOfDay") LocalDateTime endOfDay);
 }
