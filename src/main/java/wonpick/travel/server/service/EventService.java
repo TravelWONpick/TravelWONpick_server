@@ -33,6 +33,7 @@ public class EventService {
         return events.stream()
                 .map(event -> {
                     EventDTO dto = new EventDTO();
+                    dto.setId(event.getId());
                     dto.setTitle(event.getTitle());
                     dto.setPreviewImage(event.getPreviewImage());
                     dto.setStartDate(event.getStartDate());
