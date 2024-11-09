@@ -4,7 +4,9 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class EventDetailDTO {
+public class
+EventDetailDTO {
+    private Long id;
     private String title;
     private String image;
     private LocalDateTime startDate;
