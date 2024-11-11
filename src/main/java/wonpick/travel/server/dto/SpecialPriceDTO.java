@@ -18,5 +18,7 @@ public class SpecialPriceDTO {
     private String category;
     private Integer minPrice;
     private String image_url;
+    private String arrival_airport_code;
+    private String departure_airport_code;
 //    private List<FlightDTO> flights;
 }
