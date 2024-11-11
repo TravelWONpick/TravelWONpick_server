@@ -55,8 +55,8 @@ public class UserService {
                     .password(request.getPassword())
                     .userAttributes(
                             AttributeType.builder().name("email").value(request.getEmail()).build(),
-                            AttributeType.builder().name("name").value(request.getName()).build(),
-                            AttributeType.builder().name("phonenumber").value(request.getPhonenumber()).build()
+                            AttributeType.builder().name("name").value((request.getName())).build(),
+                            AttributeType.builder().name("custom:phone").value(request.getPhonenumber()).build()
                     )
                     .build();
 
@@ -88,14 +88,14 @@ public class UserService {
     // 최종 회원가입 - DB 저장
     @Transactional
     public void signUp(PostSignupUserRequest request) {
-        String eamil = request.getEmail();
+        String email = request.getEmail();
         String password = request.getPassword();
         String name = request.getName();
         String phonenumber = request.getPhonenumber();
         Boolean notification = request.getNotification();
 
         User user = User.builder()
-                .email(eamil)
+                .email(email)
                 .password(password)
                 .name(name)
                 .phoneNumber(phonenumber)
