@@ -5,10 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import wonpick.travel.server.dto.*;
 import wonpick.travel.server.dto.BaseResponse;
 import wonpick.travel.server.service.FlightService;
@@ -18,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173") // 프론트엔드 주소를 명시
 public class SpecialPriceController {
     private final SpecialPriceService specialPriceService;
     private final FlightService flightService;
@@ -25,6 +23,7 @@ public class SpecialPriceController {
 
     @GetMapping("/special")
     public ResponseEntity<BaseResponse<GetSpecialPriceListResponse>> getSpecialPrices() {
+        logger.info("[teavelwonpick] 특가픽 리스트 조회");
         GetSpecialPriceListResponse allSpecialPricesWithFlights = specialPriceService.getAllSpecialPricesWithFlights();
         return ResponseEntity.ok(BaseResponse.success(allSpecialPricesWithFlights));
     }
