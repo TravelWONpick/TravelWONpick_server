@@ -23,7 +23,8 @@ public interface SpecialPriceRepository extends JpaRepository<SpecialPricePick, 
 
     @Query("SELECT new wonpick.travel.server.dto.SpecialPriceDTO(" +
             "sp.id, sp.destination, sp.departureDate, sp.title, sp.description, " +
-            "sp.openTime, sp.closeTime, sp.category, MIN(f.specialPrice), sp.imageUrl) " +
+            "sp.openTime, sp.closeTime, sp.category, MIN(f.specialPrice), sp.imageUrl," +
+            "sp.arrAirportCode, sp.depAirportCode) " +
             "FROM SpecialPricePick sp " +
             "JOIN sp.flights f " +
             "GROUP BY sp.id, sp.destination, sp.departureDate, sp.title, sp.description, " +
