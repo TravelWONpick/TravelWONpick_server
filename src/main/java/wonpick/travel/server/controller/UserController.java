@@ -83,6 +83,7 @@ public class UserController {
         logger.info("[travelwonpick] 로그인 요청 수신: 회원 이메일 - " + request.getEmail() + ", 요청 시간 - " + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(ZonedDateTime.now()));
         try {
             PostLoginUserResponse response = userService.login(request);
+            // response.setSub(response.getSub());
             logger.info("[travelwonpick] 로그인 성공: 회원 이메일 - " + request.getEmail() + ", 요청 시간 - " + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(ZonedDateTime.now()));
             return ResponseEntity.ok(BaseResponse.success(response));
         } catch (Exception e) {

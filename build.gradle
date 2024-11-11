@@ -45,6 +45,9 @@ dependencies {
 
 	//Spring Cloud AWS 의존성 추가
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+	//AccessToken Decode 의존성 추가
+	implementation 'com.auth0:java-jwt:4.3.0'
 }
 
 tasks.named('test') {

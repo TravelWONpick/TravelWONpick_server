@@ -1,5 +1,7 @@
 package wonpick.travel.server.service;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +30,7 @@ import wonpick.travel.server.dto.PostVerifyUserUserRequest;
 import wonpick.travel.server.entity.User;
 import wonpick.travel.server.repository.UserRepository;
 
+import java.util.Base64;
 import java.util.Map;
 
 @Service
@@ -52,7 +55,8 @@ public class UserService {
                     .password(request.getPassword())
                     .userAttributes(
                             AttributeType.builder().name("email").value(request.getEmail()).build(),
-                            AttributeType.builder().name("name").value(request.getName()).build()
+                            AttributeType.builder().name("name").value(request.getName()).build(),
+                            AttributeType.builder().name("phonenumber").value(request.getPhonenumber()).build()
                     )
                     .build();
 
@@ -84,13 +88,18 @@ public class UserService {
     // 최종 회원가입 - DB 저장
     @Transactional
     public void signUp(PostSignupUserRequest request) {
-        // 단순 비밀번호 저장 (주의: 보안에 취약함)
+        String eamil = request.getEmail();
         String password = request.getPassword();
+        String name = request.getName();
+        String phonenumber = request.getPhonenumber();
+        Boolean notification = request.getNotification();
 
         User user = User.builder()
-                .email(request.getEmail())
-                .password(password)  // 단순 비밀번호 저장
-                .notification(true) // 초기값 설정 - 알림 여부
+                .email(eamil)
+                .password(password)
+                .name(name)
+                .phoneNumber(phonenumber)
+                .notification(notification)
                 .build();
 
         userRepository.save(user);
@@ -123,7 +132,17 @@ public class UserService {
 
             InitiateAuthResponse response = cognitoClient.initiateAuth(authRequest);
             String accessToken = response.authenticationResult().accessToken();
-            return new PostLoginUserResponse("로그인 성공", accessToken);
+//          String sub = response.authenticationResult().parse(accessToken());
+
+            DecodedJWT jwt = JWT.decode(accessToken);
+            String sub = jwt.getSubject();
+
+            // sub 값
+            User user = userRepository.findByEmail(request.getEmail()).orElseThrow(RuntimeException::new);
+            user.setSub(sub);
+            userRepository.save(user);
+
+            return new PostLoginUserResponse("로그인 성공", accessToken, sub);
         } catch (CognitoIdentityProviderException e) {
             throw new RuntimeException("로그인 중 오류가 발생했습니다: " + e.awsErrorDetails().errorMessage(), e);
         }

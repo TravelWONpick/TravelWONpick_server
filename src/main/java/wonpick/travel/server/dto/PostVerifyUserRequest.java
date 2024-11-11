@@ -7,4 +7,5 @@ public class PostVerifyUserRequest {
     private String email;
     private String password;
     private String name;
+    private String phonenumber;
 }

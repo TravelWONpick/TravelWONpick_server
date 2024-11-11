@@ -11,5 +11,7 @@ public class PostSignupUserRequest {
 
     private String email;
     private String password;
+    private String name;
+    private String phonenumber;
     private Boolean notification;
 }
