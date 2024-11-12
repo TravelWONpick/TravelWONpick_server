@@ -17,8 +17,9 @@ public class BaseResponse<T> {
         return new BaseResponse<>(HttpStatus.OK.value(), "Success", data);
     }
 
-    public static <T> BaseResponse<T> failure(String message) {
-        return new BaseResponse<>(HttpStatus.BAD_REQUEST.value(), message, null);
+
+    public static <T> BaseResponse<T> failure(String message, HttpStatus status) {
+        return new BaseResponse<>(status.value(), message, null);
     }
 
     // Getters and Setters
