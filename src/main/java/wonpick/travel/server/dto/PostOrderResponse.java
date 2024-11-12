@@ -2,9 +2,11 @@ package wonpick.travel.server.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 
-@Data
+
+@Getter
 @AllArgsConstructor
-public class PostVertifyUserResponse {
-    private String message;
+public class PostOrderResponse {
+    private Long orderSeqId;
 }

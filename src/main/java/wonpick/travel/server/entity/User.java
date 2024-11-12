@@ -17,12 +17,14 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @Column(nullable = false)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
+    @Setter
     @Column(nullable = false)
     private String name;
 
@@ -30,6 +32,7 @@ public class User extends BaseEntity {
     @Setter
     private String sub;
 
+    @Setter
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -40,6 +43,6 @@ public class User extends BaseEntity {
     private List<UserPassenger> userPassengers;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reservation> reservations;
+    private List<Order> orders;
 
 }
