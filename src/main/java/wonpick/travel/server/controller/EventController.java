@@ -51,7 +51,7 @@ public class EventController {
             return ResponseEntity.ok(BaseResponse.success(eventDetail));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(BaseResponse.failure("Event not found: " + e.getMessage()));
+                    .body(BaseResponse.failure("Event not found: " + e.getMessage(), HttpStatus.BAD_REQUEST));
         }
     }
 
@@ -83,7 +83,7 @@ public class EventController {
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(BaseResponse.failure("Failed to create event: " + e.getMessage()));
+                    .body(BaseResponse.failure("Failed to create event: " + e.getMessage(), HttpStatus.BAD_REQUEST));
         }
     }
 
@@ -100,7 +100,7 @@ public class EventController {
             // 삭제 실패 응답
             String errorMessage = "Failed to delete event: " + e.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(BaseResponse.failure(errorMessage));
+                    .body(BaseResponse.failure(errorMessage, HttpStatus.BAD_REQUEST));
         }
     }
 }
