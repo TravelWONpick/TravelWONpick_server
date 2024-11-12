@@ -32,14 +32,17 @@ public class UserController {
     // 인증번호 전송 API
     @PostMapping("/verifyuser")
     public ResponseEntity<BaseResponse<PostVertifyUserResponse>> verifyUser(@RequestBody PostVerifyUserRequest request) {
-        logger.info("[travelwonpick] 인증번호 전송 요청 수신: 회원 이메일 - " + request.getEmail() + ", 요청 시간 - " + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(ZonedDateTime.now()));
+        logger.info("[travelwonpick] 인증번호 전송 요청 수신: 회원 이메일 - " + request.getEmail() + ", 요청 시간 - " +
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(ZonedDateTime.now()));
         try {
             PostVertifyUserResponse response = userService.verifyUser(request);
-            logger.info("[travelwonpick] 인증번호 전송 성공: 회원 이메일 - " + request.getEmail() + ", 요청 시간 - " + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(ZonedDateTime.now()));
+            logger.info("[travelwonpick] 인증번호 전송 성공: 회원 이메일 - " + request.getEmail() + ", 요청 시간 - " +
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(ZonedDateTime.now()));
             return ResponseEntity.ok(BaseResponse.success(response));
         } catch (Exception e) {
             logger.warn("[travelwonpick] 인증번호 전송 실패: 회원 이메일 - " + request.getEmail() + ", 오류 - " + e.getMessage());
-            return ResponseEntity.status(500).body(BaseResponse.failure("인증번호 전송 중 오류가 발생했습니다."));
+            // HTTP 상태 코드를 400으로 설정하고, 예외 메시지를 클라이언트로 전달
+            return ResponseEntity.badRequest().body(BaseResponse.failure(e.getMessage()));
         }
     }
 
