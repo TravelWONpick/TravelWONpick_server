@@ -3,8 +3,6 @@ package wonpick.travel.server.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,12 +23,11 @@ import wonpick.travel.server.dto.PostLoginUserResponse;
 import wonpick.travel.server.dto.PostSignupUserRequest;
 import wonpick.travel.server.dto.PostVerifySuccessUserResponse;
 import wonpick.travel.server.dto.PostVerifyUserRequest;
-import wonpick.travel.server.dto.PostVertifyUserResponse;
+import wonpick.travel.server.dto.PostVerifyUserResponse;
 import wonpick.travel.server.dto.PostVerifyUserUserRequest;
 import wonpick.travel.server.entity.User;
 import wonpick.travel.server.repository.UserRepository;
 
-import java.util.Base64;
 import java.util.Map;
 
 @Service
@@ -47,7 +44,7 @@ public class UserService {
     private String clientId;
 
     // 인증번호 전송 API
-    public PostVertifyUserResponse verifyUser(PostVerifyUserRequest request) {
+    public PostVerifyUserResponse verifyUser(PostVerifyUserRequest request) {
         try {
             SignUpRequest signUpRequest = SignUpRequest.builder()
                     .clientId(clientId)
@@ -61,7 +58,7 @@ public class UserService {
                     .build();
 
             cognitoClient.signUp(signUpRequest);
-            return new PostVertifyUserResponse("인증번호가 발송되었습니다. 이메일 인증을 확인해 주세요.");
+            return new PostVerifyUserResponse("인증번호가 발송되었습니다. 이메일 인증을 확인해 주세요.");
         } catch (UsernameExistsException e) {
             throw new RuntimeException("이미 해당 이메일 주소로 가입된 사용자가 있습니다.", e);
         } catch (CognitoIdentityProviderException e) {
@@ -108,12 +105,15 @@ public class UserService {
     // 로그인 API
     public PostLoginUserResponse login(PostLoginUserRequest request) {
         try {
+            // 사용자 정보 요청
             AdminGetUserRequest getUserRequest = AdminGetUserRequest.builder()
                     .userPoolId(userPoolId)
                     .username(request.getEmail())
                     .build();
 
             AdminGetUserResponse getUserResponse = cognitoClient.adminGetUser(getUserRequest);
+
+            // 이메일 인증 여부 확인
             boolean isEmailVerified = getUserResponse.userAttributes().stream()
                     .anyMatch(attribute -> attribute.name().equals("email_verified") && attribute.value().equals("true"));
 
@@ -121,6 +121,7 @@ public class UserService {
                 throw new RuntimeException("사용자가 이메일 인증을 완료하지 않았습니다.");
             }
 
+            // 인증 요청
             InitiateAuthRequest authRequest = InitiateAuthRequest.builder()
                     .clientId(clientId)
                     .authFlow(AuthFlowType.USER_PASSWORD_AUTH)
@@ -130,23 +131,38 @@ public class UserService {
                     ))
                     .build();
 
+            // 인증 응답 처리
             InitiateAuthResponse response = cognitoClient.initiateAuth(authRequest);
             String accessToken = response.authenticationResult().accessToken();
-//          String sub = response.authenticationResult().parse(accessToken());
 
+            if (accessToken == null) {
+                throw new RuntimeException("Access token 생성에 실패했습니다.");
+            }
+
+            // 사용자 이름 가져오기
+            String name = getUserResponse.userAttributes().stream()
+                    .filter(attribute -> "name".equals(attribute.name()))
+                    .map(AttributeType::value)
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("사용자의 이름 속성을 찾을 수 없습니다."));
+
+            // sub 값 저장
             DecodedJWT jwt = JWT.decode(accessToken);
             String sub = jwt.getSubject();
 
-            // sub 값
             User user = userRepository.findByEmail(request.getEmail()).orElseThrow(RuntimeException::new);
-            user.setSub(sub);
-            userRepository.save(user);
+            if (user.getSub() == null) {
+                user.setSub(sub);
+                userRepository.save(user);
+            }
 
-            return new PostLoginUserResponse("로그인 성공", accessToken, sub);
+
+            return new PostLoginUserResponse("로그인 성공", accessToken, name);
         } catch (CognitoIdentityProviderException e) {
             throw new RuntimeException("로그인 중 오류가 발생했습니다: " + e.awsErrorDetails().errorMessage(), e);
         }
     }
+
 
     // 로그아웃 API
     public String logout(String accessToken) {

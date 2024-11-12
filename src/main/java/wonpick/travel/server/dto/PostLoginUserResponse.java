@@ -9,5 +9,5 @@ public class PostLoginUserResponse {
 
     private String message;
     private String accessToken;
-    private String sub;
+    private String name;
 }
