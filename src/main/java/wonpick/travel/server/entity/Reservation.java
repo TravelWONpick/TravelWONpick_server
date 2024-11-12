@@ -19,12 +19,12 @@ public class Reservation extends BaseEntity {
     @Column(name = "reservation_id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
     @Column(name = "order_id", nullable = false, length = 6)
-    private String orderId;
+    private String orderId; // 마이페이지 예약번호
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_seq_id", nullable = false)
+    private Order order;
 
     @Column(name = "is_round_trip", nullable = false)
     private Boolean isRoundTrip;
