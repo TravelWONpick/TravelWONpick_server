@@ -40,6 +40,6 @@ public class User extends BaseEntity {
     private List<UserPassenger> userPassengers;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reservation> reservations;
+    private List<Order> orders;
 
 }
