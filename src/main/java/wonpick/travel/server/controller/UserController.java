@@ -3,6 +3,7 @@ package wonpick.travel.server.controller;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wonpick.travel.server.dto.BaseResponse;
@@ -39,7 +40,7 @@ public class UserController {
             return ResponseEntity.ok(BaseResponse.success(response));
         } catch (Exception e) {
             logger.warn("[travelwonpick] 인증번호 전송 실패: 회원 이메일 - " + request.getEmail() + ", 오류 - " + e.getMessage());
-            return ResponseEntity.status(500).body(BaseResponse.failure("인증번호 전송 중 오류가 발생했습니다."));
+            return ResponseEntity.status(500).body(BaseResponse.failure("인증번호 전송 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR));
         }
     }
 
@@ -53,7 +54,7 @@ public class UserController {
             return ResponseEntity.ok(BaseResponse.success(response));
         } catch (Exception e) {
             logger.warn("[travelwonpick] 인증번호 확인 실패: 회원 이메일 - " + request.getEmail() + ", 오류 - " + e.getMessage());
-            return ResponseEntity.status(401).body(BaseResponse.failure("인증번호 확인 중 오류가 발생했습니다."));
+            return ResponseEntity.status(401).body(BaseResponse.failure("인증번호 확인 중 오류가 발생했습니다.", HttpStatus.BAD_REQUEST));
         }
     }
 
@@ -71,7 +72,7 @@ public class UserController {
 
         } catch (Exception e) {
             logger.warn("[travelwonpick] 회원가입 실패: 회원 이메일 - " + request.getEmail() + ", 오류 - " + e.getMessage());
-            return ResponseEntity.status(500).body(BaseResponse.failure("회원가입 중 오류가 발생했습니다."));
+            return ResponseEntity.status(500).body(BaseResponse.failure("회원가입 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR));
         }
     }
 
@@ -86,7 +87,7 @@ public class UserController {
             return ResponseEntity.ok(BaseResponse.success(response));
         } catch (Exception e) {
             logger.warn("[travelwonpick] 로그인 실패: 회원 이메일 - " + request.getEmail() + ", 오류 - " + e.getMessage());
-            return ResponseEntity.status(401).body(BaseResponse.failure("로그인 실패: 이메일 또는 비밀번호가 올바르지 않습니다."));
+            return ResponseEntity.status(401).body(BaseResponse.failure("로그인 실패: 이메일 또는 비밀번호가 올바르지 않습니다.", HttpStatus.BAD_REQUEST));
         }
     }
 
@@ -106,7 +107,7 @@ public class UserController {
             return ResponseEntity.ok(BaseResponse.success(response));
         } catch (Exception e) {
             logger.warn("[travelwonpick] 로그아웃 실패, 오류 - " + e.getMessage());
-            return ResponseEntity.status(500).body(BaseResponse.failure("로그아웃 중 오류가 발생했습니다."));
+            return ResponseEntity.status(500).body(BaseResponse.failure("로그아웃 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR));
         }
     }
 

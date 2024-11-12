@@ -1,18 +1,13 @@
 package wonpick.travel.server.dto;
 
-import wonpick.travel.server.entity.UserPassenger;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-import java.util.List;
+@Getter
+@AllArgsConstructor
 
 public class UserDTO {
-
     private String email;
+    private String name;
     private String phoneNumber;
-    private Boolean notification;
-
-    /*
-    private List<UserPassengerDTO> userPassengers;
-    private List<ReservationDTO> reservations;
-
-     */
 }

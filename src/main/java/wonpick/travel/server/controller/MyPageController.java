@@ -1,0 +1,57 @@
+package wonpick.travel.server.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import wonpick.travel.server.dto.BaseResponse;
+import wonpick.travel.server.dto.UserDTO;
+import wonpick.travel.server.service.MyPageService;
+
+@RestController
+@RequestMapping("/my")
+@RequiredArgsConstructor
+public class MyPageController {
+
+    private final MyPageService myPageService;
+    private static final Logger logger = LogManager.getLogger(MyPageController.class);
+
+    @GetMapping("/info")
+    public ResponseEntity<BaseResponse<UserDTO>> getUserInfo(@RequestHeader("Authorization") String authHeader) {
+        logger.info("[travelwonpick] 사용자 정보 조회");
+        try {
+            String accessToken = authHeader.replace("Bearer ", "");
+            UserDTO userResponse = myPageService.getUserInfo(accessToken);
+            return ResponseEntity.ok(BaseResponse.success(userResponse));
+        } catch (RuntimeException e) {
+            logger.error("유효하지 않은 토큰이거나 사용자를 찾을 수 없습니다.", e);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(BaseResponse.failure("유효하지 않은 토큰이거나 사용자를 찾을 수 없습니다.", HttpStatus.UNAUTHORIZED));
+        } catch (Exception e) {
+            logger.error("회원 정보 조회 중 오류가 발생했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(BaseResponse.failure("회원 정보 조회 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR));
+        }
+    }
+
+    @PatchMapping("/info")
+    public ResponseEntity<BaseResponse<UserDTO>> updateUserInfo(@RequestHeader("Authorization") String authHeader,
+                                                                @RequestBody UserDTO request) {
+        logger.info("[travelwonpick] 사용자 정보 수정");
+        try {
+            String accessToken = authHeader.replace("Bearer ", "");
+            UserDTO updatedUser = myPageService.updateUserInfo(accessToken, request);
+            return ResponseEntity.ok(BaseResponse.success(updatedUser));
+        } catch (RuntimeException e) {
+            logger.error("유효하지 않은 토큰이거나 사용자를 찾을 수 없습니다.", e);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(BaseResponse.failure("유효하지 않은 토큰이거나 사용자를 찾을 수 없습니다.", HttpStatus.UNAUTHORIZED));
+        } catch (Exception e) {
+            logger.error("회원 정보 수정 중 오류가 발생했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(BaseResponse.failure("회원 정보 수정 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR));
+        }
+    }
+}
