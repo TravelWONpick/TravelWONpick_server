@@ -40,12 +40,20 @@ public class UserController {
             logger.info("[travelwonpick] 인증번호 전송 성공: 회원 이메일 - " + request.getEmail() + ", 요청 시간 - " +
                     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(ZonedDateTime.now()));
             return ResponseEntity.ok(BaseResponse.success(response));
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             logger.warn("[travelwonpick] 인증번호 전송 실패: 회원 이메일 - " + request.getEmail() + ", 오류 - " + e.getMessage());
-            // HTTP 상태 코드를 400으로 설정하고, 예외 메시지를 클라이언트로 전달
+
+            // 예외 메시지를 사용자 친화적인 메시지로 전달
             return ResponseEntity.badRequest().body(BaseResponse.failure(e.getMessage(), HttpStatus.BAD_REQUEST));
+        } catch (Exception e) {
+            logger.error("[travelwonpick] 인증번호 전송 중 알 수 없는 오류 발생: 회원 이메일 - " + request.getEmail() + ", 오류 - " + e.getMessage());
+
+            // 사용자가 볼 수 있는 일반 메시지 전달
+            String userFriendlyMessage = "인증번호 발송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.";
+            return ResponseEntity.badRequest().body(BaseResponse.failure(userFriendlyMessage, HttpStatus.BAD_REQUEST));
         }
     }
+
 
     // 인증번호 확인 API
     @PostMapping("/verifysuccess")
