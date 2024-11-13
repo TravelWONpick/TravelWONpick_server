@@ -22,18 +22,23 @@ public class Reservation extends BaseEntity {
     @Column(name = "order_id", nullable = false, length = 6)
     private String orderId; // 마이페이지 예약번호
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_seq_id", nullable = false)
+    @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY)
     private Order order;
-
-    @Column(name = "is_round_trip", nullable = false)
-    private Boolean isRoundTrip;
 
     @Column(name = "buy_date", nullable = false)
     private LocalDateTime buyDate;
 
     @Column(name = "total_amount", nullable = false)
     private int totalAmount;
+
+    @Column(nullable = false)
+    private String journey;
+
+    @Column(name = "seat_count", nullable = false)
+    private Long seatCount;
+
+    @Column(name = "boarding_date", nullable = false)
+    private LocalDateTime boardingDate;
 
     // ReservationFlight와 일대다 관계
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
