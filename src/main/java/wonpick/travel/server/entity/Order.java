@@ -32,7 +32,7 @@ public class Order extends BaseEntity {
     private String orderId; // 클라이언트에서 제공하는 주문번호 UUID
 
     @Column(name = "amount", nullable = false)
-    private int amount; // 최종 결제 금액
+    private Integer amount; // 최종 결제 금액
 
     @Column(name = "status", nullable = false)
     private OrderStatus status; // 결제 상태
