@@ -94,7 +94,7 @@ public class MyPageService {
         // 필요한 정보만 포함하는 DTO로 변환
         return reservations.stream()
                 .map(reservation -> new ReservationDTO(
-                        reservation.getOrderId(),
+                        reservation.getOrder().getOrderId(),
                         reservation.getBoardingDate().format(formatter),
                         reservation.getJourney(),
                         reservation.getSeatCount()

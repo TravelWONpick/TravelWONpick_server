@@ -19,9 +19,6 @@ public class Reservation extends BaseEntity {
     @Column(name = "reservation_id", nullable = false)
     private Long id;
 
-    @Column(name = "order_id", nullable = false, length = 6)
-    private String orderId; // 마이페이지 예약번호
-
     @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY)
     private Order order;
 
