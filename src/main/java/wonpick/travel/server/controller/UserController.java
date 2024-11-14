@@ -5,20 +5,25 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import wonpick.travel.server.dto.BaseResponse;
 import wonpick.travel.server.dto.PostLoginUserRequest;
 import wonpick.travel.server.dto.PostLoginUserResponse;
 import wonpick.travel.server.dto.PostSignupUserRequest;
 import wonpick.travel.server.dto.PostSignupUserResponse;
+import wonpick.travel.server.dto.PostVerifySuccessUserResponse;
 import wonpick.travel.server.dto.PostVerifyUserRequest;
 import wonpick.travel.server.dto.PostVerifyUserResponse;
-import wonpick.travel.server.dto.PostVerifySuccessUserResponse;
 import wonpick.travel.server.dto.PostVerifyUserUserRequest;
 import wonpick.travel.server.service.UserService;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -43,7 +48,6 @@ public class UserController {
         } catch (RuntimeException e) {
             logger.warn("[travelwonpick] 인증번호 전송 실패: 회원 이메일 - " + request.getEmail() + ", 오류 - " + e.getMessage());
 
-            // 예외 메시지를 사용자 친화적인 메시지로 전달
             return ResponseEntity.badRequest().body(BaseResponse.failure(e.getMessage(), HttpStatus.BAD_REQUEST));
         } catch (Exception e) {
             logger.error("[travelwonpick] 인증번호 전송 중 알 수 없는 오류 발생: 회원 이메일 - " + request.getEmail() + ", 오류 - " + e.getMessage());
@@ -53,7 +57,6 @@ public class UserController {
             return ResponseEntity.badRequest().body(BaseResponse.failure(userFriendlyMessage, HttpStatus.BAD_REQUEST));
         }
     }
-
 
     // 인증번호 확인 API
     @PostMapping("/verifysuccess")
@@ -93,7 +96,7 @@ public class UserController {
         logger.info("[travelwonpick] 로그인 요청 수신: 회원 이메일 - " + request.getEmail() + ", 요청 시간 - " + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(ZonedDateTime.now()));
         try {
             PostLoginUserResponse response = userService.login(request);
-            // response.setSub(response.getSub());
+
             logger.info("[travelwonpick] 로그인 성공: 회원 이메일 - " + request.getEmail() + ", 요청 시간 - " + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(ZonedDateTime.now()));
             return ResponseEntity.ok(BaseResponse.success(response));
         } catch (Exception e) {
@@ -121,5 +124,4 @@ public class UserController {
             return ResponseEntity.status(500).body(BaseResponse.failure("로그아웃 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR));
         }
     }
-
 }
