@@ -60,11 +60,20 @@ public class UserService {
             cognitoClient.signUp(signUpRequest);
             return new PostVerifyUserResponse("인증번호가 발송되었습니다. 이메일 인증을 확인해 주세요.");
         } catch (UsernameExistsException e) {
-            throw new RuntimeException("이미 해당 이메일 주소로 가입된 사용자가 있습니다.", e);
+            // 이미 가입된 사용자에 대한 예외 메시지
+            throw new RuntimeException("이미 해당 이메일 주소로 가입된 사용자가 있습니다.");
         } catch (CognitoIdentityProviderException e) {
-            throw new RuntimeException("인증번호 발송 중 오류가 발생했습니다: " + e.awsErrorDetails().errorMessage(), e);
+            String errorMessage = e.awsErrorDetails().errorMessage();
+            if (errorMessage.contains("daily email limit")) {
+                throw new RuntimeException("인증번호 발송 한도를 초과했습니다. 잠시 후 다시 시도해 주세요.");
+            } else if (errorMessage.contains("InvalidParameterException")) {
+                throw new RuntimeException("입력된 정보에 오류가 있습니다. 확인 후 다시 시도해 주세요.");
+            } else {
+                throw new RuntimeException("인증번호 발송 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+            }
         }
     }
+
 
     // 인증번호 확인 API
     public PostVerifySuccessUserResponse verifySuccess(PostVerifyUserUserRequest request) {
