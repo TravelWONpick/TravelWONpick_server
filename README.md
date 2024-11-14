@@ -1,5 +1,5 @@
 # TravelWONpick_server
 TravelWONpick 서버 repository
 
-jenkins test2
+jenkins test3
 
