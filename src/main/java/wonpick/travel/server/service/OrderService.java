@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-import wonpick.travel.server.controller.CardController;
 import wonpick.travel.server.dto.PostOrderResponse;
 import wonpick.travel.server.entity.Order;
 import wonpick.travel.server.entity.User;
@@ -32,5 +31,11 @@ public class OrderService {
 
         Order savedOrder = orderRepository.save(order);
         return new PostOrderResponse(savedOrder.getId());
+    }
+
+
+    public Order findByOrderId(String orderId) {
+        return orderRepository.findByOrderId(orderId)
+                .orElseThrow(() -> new RuntimeException("주문 정보를 찾을 수 없습니다."));
     }
 }
