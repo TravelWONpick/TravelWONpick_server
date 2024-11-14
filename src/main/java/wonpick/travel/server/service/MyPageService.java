@@ -110,7 +110,6 @@ public class MyPageService {
             reservations.add(reservation);
         });
 
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         // 필요한 정보만 포함하는 DTO로 변환
