@@ -101,6 +101,23 @@ public class MyPageController {
                     .body(BaseResponse.failure("예약 내역 조회 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR));
         }
     }
+    @GetMapping("/flight/detail-passenger")
+    public ResponseEntity<BaseResponse<List<ReservationFlightPassengerDTO>>> getUserReservations(@RequestHeader("Authorization") String authHeader) {
+        logger.info("[travelwonpick] 예약 내역 조회 요청");
+        try {
+            String accessToken = authHeader.replace("Bearer ", "");
+            List<ReservationFlightPassengerDTO> reservationFlightPassengers = myPageService.getUserReservations(accessToken);//getUserReservations 수정
+            return ResponseEntity.ok(BaseResponse.success(reservationFlightPassengers));
+        } catch (RuntimeException e) {
+            logger.error("유효하지 않은 토큰이거나 사용자를 찾을 수 없습니다.", e);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(BaseResponse.failure("유효하지 않은 토큰이거나 사용자를 찾을 수 없습니다.", HttpStatus.UNAUTHORIZED));
+        } catch (Exception e) {
+            logger.error("예약 내역 조회 중 오류가 발생했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(BaseResponse.failure("예약 내역 조회 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR));
+        }
+    }
 
 
 
