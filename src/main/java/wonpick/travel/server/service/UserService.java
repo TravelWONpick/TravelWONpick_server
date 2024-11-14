@@ -1,6 +1,7 @@
 package wonpick.travel.server.service;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,17 +19,13 @@ import software.amazon.awssdk.services.cognitoidentityprovider.model.InitiateAut
 import software.amazon.awssdk.services.cognitoidentityprovider.model.SignUpRequest;
 import software.amazon.awssdk.services.cognitoidentityprovider.model.UsernameExistsException;
 import software.amazon.awssdk.services.cognitoidentityprovider.model.AuthFlowType;
-import wonpick.travel.server.dto.PostLoginUserRequest;
-import wonpick.travel.server.dto.PostLoginUserResponse;
-import wonpick.travel.server.dto.PostSignupUserRequest;
-import wonpick.travel.server.dto.PostVerifySuccessUserResponse;
-import wonpick.travel.server.dto.PostVerifyUserRequest;
-import wonpick.travel.server.dto.PostVerifyUserResponse;
-import wonpick.travel.server.dto.PostVerifyUserUserRequest;
+import wonpick.travel.server.dto.*;
 import wonpick.travel.server.entity.User;
 import wonpick.travel.server.repository.UserRepository;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -143,9 +140,10 @@ public class UserService {
             // 인증 응답 처리
             InitiateAuthResponse response = cognitoClient.initiateAuth(authRequest);
             String accessToken = response.authenticationResult().accessToken();
+            String idToken = response.authenticationResult().idToken();
 
-            if (accessToken == null) {
-                throw new RuntimeException("Access token 생성에 실패했습니다.");
+            if (accessToken == null || idToken == null) {
+                throw new RuntimeException("Access token 또는 ID token 생성에 실패했습니다.");
             }
 
             // 사용자 이름 가져오기
@@ -165,13 +163,29 @@ public class UserService {
                 userRepository.save(user);
             }
 
+            // 관리자인지 여부 확인 (ID 토큰에서 확인)
+            DecodedJWT idTokenDecoded = JWT.decode(idToken);
+            List<String> groups = idTokenDecoded.getClaim("cognito:groups").asList(String.class);
+            boolean isAdmin = groups != null && groups.contains("admin");
 
-            return new PostLoginUserResponse("로그인 성공", accessToken, name);
+            return new PostLoginUserResponse("로그인 성공", accessToken, name, isAdmin);
+
         } catch (CognitoIdentityProviderException e) {
             throw new RuntimeException("로그인 중 오류가 발생했습니다: " + e.awsErrorDetails().errorMessage(), e);
         }
     }
 
+
+    public boolean isAdmin(String IdToken) {
+        try {
+            DecodedJWT jwt = JWT.decode(IdToken);
+            String role = jwt.getClaim("cognito:groups").asString();
+
+            return "admin".equals(role);
+        } catch (JWTDecodeException e) {
+            throw new RuntimeException("JWT 토큰 디코딩 중 오류 발생 " + e.getMessage(), e);
+        }
+    }
 
     // 로그아웃 API
     public String logout(String accessToken) {

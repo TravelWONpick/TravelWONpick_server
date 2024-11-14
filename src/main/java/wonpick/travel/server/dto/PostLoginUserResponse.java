@@ -10,4 +10,8 @@ public class PostLoginUserResponse {
     private String message;
     private String accessToken;
     private String name;
+    private Boolean isAdmin;
+
+    //test
+    //private String idToken;
 }
