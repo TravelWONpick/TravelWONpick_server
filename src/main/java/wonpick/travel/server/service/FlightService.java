@@ -18,6 +18,10 @@ public class FlightService {
 
     private final FlightRepository flightRepository;
 
+    public Flight findFlightById(Long flightId) {
+        return flightRepository.findById(flightId)
+                .orElseThrow(() -> new RuntimeException("항공편 정보를 찾을 수 없습니다."));
+    }
 
     public List<FlightDTO> searchFlights(Long spId, String depAirportCode, String arrAirportCode, String departureDate) {
 

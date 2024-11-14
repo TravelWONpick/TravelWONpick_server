@@ -40,3 +40,4 @@ out/
 .commitmsg.txt
 application-s3.yml
 application-cognito.yml
+application-toss.yml

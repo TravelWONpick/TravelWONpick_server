@@ -6,7 +6,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   profiles:
-    include: s3, cognito
+    include: s3, cognito, toss
 
   servlet:
     multipart:
