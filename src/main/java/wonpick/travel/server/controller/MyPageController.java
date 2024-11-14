@@ -46,9 +46,10 @@ public class MyPageController {
     }
 
     @PatchMapping("/info")
-    public ResponseEntity<BaseResponse<UserDTO>> updateUserInfo(@RequestHeader("Authorization") String authHeader,
-                                                                @RequestBody UserDTO request) {
-        logger.info("[travelwonpick] 사용자 정보 수정");
+    public ResponseEntity<BaseResponse<UserDTO>> updateUserInfo(
+            @RequestHeader("Authorization") String authHeader,
+            @RequestBody UserDTO request) {
+        logger.info("[travelwonpick] 사용자 정보 수정 요청");
         try {
             String accessToken = authHeader.replace("Bearer ", "");
             UserDTO updatedUser = myPageService.updateUserInfo(accessToken, request);
@@ -63,6 +64,7 @@ public class MyPageController {
                     .body(BaseResponse.failure("회원 정보 수정 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR));
         }
     }
+
 
     @DeleteMapping("/account")
     public ResponseEntity<BaseResponse<String>> deleteAccount(@RequestHeader("Authorization") String authHeader) {
