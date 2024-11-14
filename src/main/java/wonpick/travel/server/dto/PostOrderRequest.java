@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class PostOrderRequest {
     private String orderId;
-    private int amount;
+    private Integer amount;
 }
