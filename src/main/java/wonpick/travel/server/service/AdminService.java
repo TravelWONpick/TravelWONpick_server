@@ -30,7 +30,8 @@ public class AdminService {
                     .map(user -> new UserDTO(
                             user.getEmail(),
                             user.getName(),
-                            user.getPhoneNumber()
+                            user.getPhoneNumber(),
+                            user.getNotification()
                     ))
                     .collect(Collectors.toList());
         } catch (DataAccessException e) {

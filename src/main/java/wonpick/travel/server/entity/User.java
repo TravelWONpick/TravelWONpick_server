@@ -36,6 +36,7 @@ public class User extends BaseEntity {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Setter
     @Column()
     private Boolean notification;
 

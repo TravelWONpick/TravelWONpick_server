@@ -34,6 +34,7 @@ public class MyPageService {
     private final ReservationRepository reservationRepository;
     private final OrderRepository orderRepository;
 
+    @Transactional
     public UserDTO getUserInfo(String accessToken) {
         DecodedJWT jwt = JWT.decode(accessToken);
         String sub = jwt.getSubject();
@@ -41,23 +42,40 @@ public class MyPageService {
         User user = userRepository.findBySub(sub)
                 .orElseThrow(() -> new RuntimeException("해당 사용자를 찾을 수 없습니다."));
 
-        return new UserDTO(user.getEmail(), user.getName(), user.getPhoneNumber());
+        return new UserDTO(user.getEmail(), user.getName(), user.getPhoneNumber(), user.getNotification());
     }
 
+    @Transactional
     public UserDTO updateUserInfo(String accessToken, UserDTO request) {
+        // Access token에서 사용자 ID 추출
         DecodedJWT jwt = JWT.decode(accessToken);
         String sub = jwt.getSubject();
 
+        // 사용자 검색
         User user = userRepository.findBySub(sub)
                 .orElseThrow(() -> new RuntimeException("해당 사용자를 찾을 수 없습니다."));
 
-        if (request.getEmail() != null) user.setEmail(request.getEmail());
-        if (request.getName() != null) user.setName(request.getName());
-        if (request.getPhoneNumber() != null) user.setPhoneNumber(request.getPhoneNumber());
+        // 요청 값에 따라 사용자 정보 업데이트
+        if (isNotEmpty(request.getEmail())) user.setEmail(request.getEmail());
+        if (isNotEmpty(request.getName())) user.setName(request.getName());
+        if (isNotEmpty(request.getPhoneNumber())) user.setPhoneNumber(request.getPhoneNumber());
+        if (request.getNotification() != null) user.setNotification(request.getNotification());
 
+        // 변경된 사용자 정보 저장
         userRepository.save(user);
 
-        return new UserDTO(user.getEmail(), user.getName(), user.getPhoneNumber());
+        // 변경된 사용자 정보를 기반으로 UserDTO 반환
+        return new UserDTO(
+                user.getEmail(),
+                user.getName(),
+                user.getPhoneNumber(),
+                user.getNotification()
+        );
+    }
+
+    // 유효성 검사 메서드 (null 및 빈 문자열 체크)
+    private boolean isNotEmpty(String value) {
+        return value != null && !value.trim().isEmpty();
     }
 
     @Transactional
@@ -71,6 +89,7 @@ public class MyPageService {
         userRepository.delete(user);
     }
 
+    @Transactional
     public List<ReservationDTO> getUserReservations(String accessToken) {
         // JWT 토큰에서 sub 값 추출
         DecodedJWT jwt = JWT.decode(accessToken);
@@ -105,6 +124,7 @@ public class MyPageService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public List<PassengerDTO> getPassengerInfo(String accessToken) {
         DecodedJWT jwt = JWT.decode(accessToken);
         String sub = jwt.getSubject();
@@ -124,6 +144,7 @@ public class MyPageService {
                 ))
                 .collect(Collectors.toList());
     }
+
     @Transactional
     public Long createPassenger(String accessToken, PostPassengerRequestDTO requestDTO) {
         DecodedJWT jwt = JWT.decode(accessToken);
@@ -144,6 +165,7 @@ public class MyPageService {
         UserPassenger savedPassenger = userPassengerRepository.save(passenger);
         return savedPassenger.getId();
     }
+
     // 탑승객 정보 수정
     @Transactional
     public UpdatePassengerResponseDTO updatePassenger(String accessToken, Long upId, UpdatePassengerRequestDTO requestDTO) {
@@ -178,6 +200,7 @@ public class MyPageService {
         updatedPassenger = userPassengerRepository.save(updatedPassenger);
         return UpdatePassengerResponseDTO.from(updatedPassenger);
     }
+
     // 탑승객 삭제
     @Transactional
     public void deletePassenger(String accessToken, Long upId) {
