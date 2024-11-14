@@ -19,7 +19,9 @@ public class Reservation extends BaseEntity {
     @Column(name = "reservation_id", nullable = false)
     private Long id;
 
-    @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY)
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_seq_id", nullable = false)
     private Order order;
 
     @Column(name = "buy_date", nullable = false)

@@ -1,8 +1,11 @@
 package wonpick.travel.server.dto;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public class BaseResponse<T> {
+    // Getters and Setters
     private int status;
     private String message;
     private T data;
@@ -22,16 +25,4 @@ public class BaseResponse<T> {
         return new BaseResponse<>(status.value(), message, null);
     }
 
-    // Getters and Setters
-    public int getStatus() {
-        return status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public T getData() {
-        return data;
-    }
 }
