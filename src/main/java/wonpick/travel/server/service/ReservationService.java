@@ -25,7 +25,6 @@ public class ReservationService {
     private final FlightService flightService;
 
 
-    @Transactional
     public Reservation createReservation(PostPaymentConfirmRequest request, PostPaymentConfirmResponse response,
                                          Long outboundFlightId, Long inboundFlightId, Long seatCount) {
 
