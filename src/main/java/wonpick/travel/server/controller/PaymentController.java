@@ -48,7 +48,6 @@ public class PaymentController {
 
 
 
-    //TODO: 프론트 redux로 넘겨줄 정보 (여정 등)을 PostPaymentConfirmRequest에 담아야 하는지?
     @PostMapping("/payments/confirm")
     public ResponseEntity<?> confirmPayment(@RequestBody PostPaymentConfirmRequest request) {
         logger.info("PaymentController.confirmPayment");
@@ -62,5 +61,4 @@ public class PaymentController {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
-
 }

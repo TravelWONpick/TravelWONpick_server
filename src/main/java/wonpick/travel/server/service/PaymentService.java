@@ -75,15 +75,13 @@ public class PaymentService {
             }
 
             // Reservation 추가 로직
-            Long mockDepFlightId = 1L;
-            Long mockArrFlightId = 2L;
-            Long mockSeatCount = 3L;
+            logger.info(request.toString());
             reservationService.createReservation(
                     request,
                     body,
-                    mockDepFlightId,
-                    mockArrFlightId,
-                    mockSeatCount);
+                    request.getDepFlightId(),
+                    request.getArrFlightId(),
+                    request.getSeatCount());
 
             return body; // 성공 시 응답 반환
 
