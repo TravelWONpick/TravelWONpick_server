@@ -6,15 +6,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import wonpick.travel.server.dto.*;
 import wonpick.travel.server.dto.BaseResponse;
-import wonpick.travel.server.dto.PassengerDTO;
-import wonpick.travel.server.dto.ReservationDTO;
-import wonpick.travel.server.dto.UserDTO;
 import wonpick.travel.server.service.MyPageService;
-import wonpick.travel.server.dto.PostPassengerResponseDTO;
-import wonpick.travel.server.dto.PostPassengerRequestDTO;
-import wonpick.travel.server.dto.UpdatePassengerRequestDTO;
-import wonpick.travel.server.dto.UpdatePassengerResponseDTO;
 
 import java.util.List;
 
@@ -102,6 +96,59 @@ public class MyPageController {
         }
     }
 
+    @GetMapping("/flight/{uuid}/passenger-detail")
+    public ResponseEntity<BaseResponse<List<ReservationPassengerDTO>>> getPassengerDetails(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable("uuid") String uuid) {
+
+        logger.info("[travelwonpick] 주문 UUID로 탑승객 정보 조회 요청");
+
+        try {
+            // Authorization 헤더에서 Bearer 토큰 추출
+            String accessToken = authHeader.replace("Bearer ", "");
+
+            // 서비스 호출하여 탑승객 정보 조회
+            List<ReservationPassengerDTO> passengerDetails = myPageService.getPassengerDetailsByUuid(accessToken, uuid);
+
+            // 성공 응답 반환
+            return ResponseEntity.ok(BaseResponse.success(passengerDetails));
+        } catch (RuntimeException e) {
+            logger.error("유효하지 않은 토큰이거나 주문 ID를 찾을 수 없습니다.", e);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(BaseResponse.failure("유효하지 않은 토큰이거나 주문 ID를 찾을 수 없습니다.", HttpStatus.UNAUTHORIZED));
+        } catch (Exception e) {
+            logger.error("탑승객 정보 조회 중 오류가 발생했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(BaseResponse.failure("탑승객 정보 조회 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR));
+        }
+    }
+
+    @GetMapping("/flight/{uuid}/flight-detail")
+    public ResponseEntity<BaseResponse<ReservationFlightDTO>> getFlightDetails(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable("uuid") String uuid) {
+
+        logger.info("[travelwonpick] 주문 UUID로 항공편 상세 정보 조회 요청");
+
+        try {
+            // Authorization 헤더에서 Bearer 토큰 추출
+            String accessToken = authHeader.replace("Bearer ", "");
+
+            // 서비스 호출하여 항공편 상세 정보 조회
+            ReservationFlightDTO flightDetails = myPageService.getReservationDetails(accessToken, uuid);
+
+            // 성공 응답 반환
+            return ResponseEntity.ok(BaseResponse.success(flightDetails));
+        } catch (RuntimeException e) {
+            logger.error("유효하지 않은 토큰이거나 주문 ID를 찾을 수 없습니다.", e);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(BaseResponse.failure("유효하지 않은 토큰이거나 주문 ID를 찾을 수 없습니다.", HttpStatus.UNAUTHORIZED));
+        } catch (Exception e) {
+            logger.error("항공편 상세 정보 조회 중 오류가 발생했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(BaseResponse.failure("항공편 상세 정보 조회 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR));
+        }
+    }
 
 
     @GetMapping("/passenger")
