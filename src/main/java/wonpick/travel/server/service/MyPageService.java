@@ -5,25 +5,18 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import wonpick.travel.server.dto.PassengerDTO;
-import wonpick.travel.server.dto.ReservationDTO;
-import wonpick.travel.server.dto.UserDTO;
-import wonpick.travel.server.entity.Order;
-import wonpick.travel.server.entity.Reservation;
-import wonpick.travel.server.entity.User;
-import wonpick.travel.server.entity.UserPassenger;
+import wonpick.travel.server.dto.*;
+import wonpick.travel.server.entity.*;
 import wonpick.travel.server.repository.OrderRepository;
 import wonpick.travel.server.repository.ReservationRepository;
 import wonpick.travel.server.repository.UserPassengerRepository;
 import wonpick.travel.server.repository.UserRepository;
-import wonpick.travel.server.dto.PostPassengerRequestDTO;
-import wonpick.travel.server.dto.UpdatePassengerRequestDTO;
-import wonpick.travel.server.dto.UpdatePassengerResponseDTO;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -122,6 +115,107 @@ public class MyPageService {
                 ))
                 .collect(Collectors.toList());
     }
+
+    public List<ReservationPassengerDTO> getPassengerDetailsByUuid(String accessToken, String uuid) {
+        // JWT 토큰에서 사용자 식별자(sub) 추출
+        DecodedJWT jwt = JWT.decode(accessToken);
+        String userSub = jwt.getSubject();
+
+        // 주문 UUID로 주문 조회
+        Order order = orderRepository.findByOrderId(uuid)
+                .orElseThrow(() -> new RuntimeException("해당 주문 UUID에 해당하는 주문을 찾을 수 없습니다."));
+
+        // 사용자 검증: 주문 정보와 JWT 사용자 정보가 일치하는지 확인
+        if (!order.getUser().getSub().equals(userSub)) {
+            throw new RuntimeException("주문 정보와 사용자 정보가 일치하지 않습니다.");
+        }
+
+        // 주문 ID로 예매 정보 조회
+        Reservation reservation = orderRepository.findReservationByOrderId(order.getId())
+                .orElseThrow(() -> new RuntimeException("주문 ID에 해당하는 예매 정보를 찾을 수 없습니다."));
+
+        // 예매 ID로 탑승객 정보 조회
+        List<Passenger> passengers = orderRepository.findPassengersByReservationId(reservation.getId());
+
+        // Entity → DTO 변환
+        return passengers.stream()
+                .map(passenger -> new ReservationPassengerDTO(
+                        passenger.getFirstName(),
+                        passenger.getLastName(),
+                        passenger.getGender(),
+                        passenger.getBirth(),
+                        passenger.getPhoneNumber()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    public ReservationFlightDTO getReservationDetails(String accessToken, String uuid) {
+        // JWT 토큰에서 사용자 식별자 추출
+        DecodedJWT jwt = JWT.decode(accessToken);
+        String userSub = jwt.getSubject();
+
+        // 주문 UUID로 주문 조회
+        Order order = orderRepository.findByOrderId(uuid)
+                .orElseThrow(() -> new RuntimeException("해당 주문 UUID에 해당하는 주문을 찾을 수 없습니다."));
+
+        // 사용자 검증
+        if (!order.getUser().getSub().equals(userSub)) {
+            throw new RuntimeException("주문 정보와 사용자 정보가 일치하지 않습니다.");
+        }
+
+        // 주문 ID로 예약 조회
+        Reservation reservation = orderRepository.findReservationByOrderId(order.getId())
+                .orElseThrow(() -> new RuntimeException("주문 ID에 해당하는 예약 정보를 찾을 수 없습니다."));
+
+        // 예약 ID로 항공편 리스트 조회
+        List<ReservationFlight> flights = orderRepository.findFlightsByReservationId(reservation.getId());
+
+        if (flights.size() != 2) {
+            throw new RuntimeException("항공편 정보가 유효하지 않습니다.");
+        }
+
+        // 가는 편과 오는 편 항공편 구분
+        ReservationFlight outFlight = flights.get(0);
+        ReservationFlight inFlight = flights.get(1);
+
+        // 항공편 정보 가져오기
+        Flight outFlightDetails = outFlight.getFlight();
+        Flight inFlightDetails = inFlight.getFlight();
+
+        // 좌석 수 확인 (기본값: 0)
+        long seatCount = reservation.getSeatCount() != null ? reservation.getSeatCount() : 0L;
+
+        // 가는 편과 오는 편의 originPrice 합산 후 seatCount 곱하기
+        long outOriginPrice = outFlightDetails.getOriginPrice(); // 기본값 0이 보장됨
+        long inOriginPrice = inFlightDetails.getOriginPrice();   // 기본값 0이 보장됨
+        long originPrice = (outOriginPrice + inOriginPrice) * seatCount;
+
+        // 예약 총 금액 가져오기
+        long reservationAmount = reservation.getTotalAmount();
+
+        // 할인 금액 계산
+        long discount = originPrice - reservationAmount;
+
+        // DTO 변환
+        return new ReservationFlightDTO(
+                seatCount,
+                originPrice,
+                discount,
+                (long) order.getAmount(),
+                outFlightDetails.getFlightNumber(),
+                outFlightDetails.getDeparturePlace() + " → " + outFlightDetails.getArrivalPlace(),
+                outFlightDetails.getDepartureTime() != null ? outFlightDetails.getDepartureTime().toString() : "출발 시간 정보 없음",
+                outFlightDetails.getArrivalTime() != null ? outFlightDetails.getArrivalTime().toString() : "도착 시간 정보 없음",
+                inFlightDetails.getFlightNumber(),
+                inFlightDetails.getDeparturePlace() + " → " + inFlightDetails.getArrivalPlace(),
+                inFlightDetails.getDepartureTime() != null ? inFlightDetails.getDepartureTime().toString() : "출발 시간 정보 없음",
+                inFlightDetails.getArrivalTime() != null ? inFlightDetails.getArrivalTime().toString() : "도착 시간 정보 없음"
+        );
+    }
+
+
+
+
 
     @Transactional
     public List<PassengerDTO> getPassengerInfo(String accessToken) {
