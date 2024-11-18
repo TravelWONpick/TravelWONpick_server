@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 import wonpick.travel.server.dto.PostPaymentConfirmRequest;
 import wonpick.travel.server.dto.PostPaymentConfirmResponse;
@@ -18,7 +19,10 @@ import wonpick.travel.server.util.DateUtil;
 @Service
 @RequiredArgsConstructor
 public class ReservationService {
+
     private static final Logger logger = LogManager.getLogger(ReservationService.class);
+
+    private final RedissonClient redissonClient;
     private final ReservationRepository reservationRepository;
     private final ReservationFlightRepository reservationFlightRepository;
     private final OrderService orderService;
@@ -55,6 +59,10 @@ public class ReservationService {
 
         // Reservation 저장
         reservation = reservationRepository.save(reservation);
+
+        // 항공권 잔여석 차감
+        flightService.adjustFlightSeatCountWithLock(outboundFlightId, seatCount);
+        flightService.adjustFlightSeatCountWithLock(inboundFlightId, seatCount);
 
         // ReservationFlight 생성 및 저장
         createReservationFlight(reservation, outboundFlight);
