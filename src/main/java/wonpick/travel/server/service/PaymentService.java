@@ -4,113 +4,161 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
+import wonpick.travel.server.common.exception.BaseException;
+import wonpick.travel.server.common.exception.ErrorCode;
 import wonpick.travel.server.dto.PostPaymentConfirmRequest;
 import wonpick.travel.server.dto.PostPaymentConfirmResponse;
 import wonpick.travel.server.repository.OrderRepository;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
 public class PaymentService {
     private static final Logger logger = LogManager.getLogger(PaymentService.class);
+    private static final int LOCK_WAIT_TIME = 10;
+    private static final int LOCK_LEASE_TIME = 5;
+
     private final OrderRepository orderRepository;
     private final RestTemplate restTemplate;
     private final ReservationService reservationService;
+    private final RedissonClient redissonClient;
 
-    // 설정 파일에서 API URL과 Secret Key 주입받기
     @Value("${toss.api.url}")
     private String apiUrl;
 
     @Value("${toss.api.widget-secret-key}")
     private String widgetSecretKey;
 
-    // 결제 요청 유효성 검사
+    // 결제 요청 검증
     public boolean validatePaymentInfo(String orderId, Integer amount) {
-        logger.info("PaymentService.validatePaymentInfo");
+        logger.debug("Validating payment info for orderId: {} with amount: {}", orderId, amount);
 
         return orderRepository.findByOrderId(orderId)
                 .map(order -> {
-                    boolean isValid = order.getAmount().equals(amount);
-
-                    if (isValid) {
-                        logger.info("Order validation successful");
-                    } else {
-                        logger.warn("Order validation failed: Amount mismatch");
+                    if (!order.getAmount().equals(amount)) {
+                        throw new BaseException(
+                                ErrorCode.INVALID_PAYMENT_AMOUNT,
+                                Map.of("orderId", orderId,
+                                        "expectedAmount", order.getAmount(),
+                                        "actualAmount", amount)
+                        );
                     }
-
-                    return isValid;
+                    return true;
                 })
-                .orElseGet(() -> {
-                    logger.warn("Order not found for ID: " + orderId);
-                    return false;
-                });
+                .orElseThrow(() ->
+                        new BaseException(
+                                ErrorCode.RESOURCE_NOT_FOUND,
+                                "Order 정보를 불러올 수 없습니다.",
+                                Map.of("orderId", orderId))
+                );
     }
 
+
+    // 결제 승인 요청을 토스 API에서 전달, 이후 결제 관련 로직 처리
     @Transactional
     public PostPaymentConfirmResponse confirmPayment(PostPaymentConfirmRequest request) {
-        logger.info("PaymentService.confirmPayment");
-        HttpHeaders headers = createAuthHeaders();
+        logger.debug("Processing payment confirmation for request: {}", request);
 
-        HttpEntity<PostPaymentConfirmRequest> entity = new HttpEntity<>(request, headers);
+        RLock[] locks = acquireLocks(request);
         try {
-            // POST 요청 보내기
+            return processPaymentConfirmation(request);
+        } finally {
+            releaseLocks(locks);
+        }
+    }
+
+    private RLock[] acquireLocks(PostPaymentConfirmRequest request) {
+        // flight 에 대한 lock 얻음
+        RLock depFlightLock = redissonClient.getLock(getFlightLockKey(request.getDepFlightId()));
+        RLock arrFlightLock = redissonClient.getLock(getFlightLockKey(request.getArrFlightId()));
+
+        try {
+            // Lock 획득 시도
+            boolean depLockAcquired = depFlightLock.tryLock(LOCK_WAIT_TIME, LOCK_LEASE_TIME, TimeUnit.SECONDS);
+            boolean arrLockAcquired = arrFlightLock.tryLock(LOCK_WAIT_TIME, LOCK_LEASE_TIME, TimeUnit.SECONDS);
+
+            if (!(depLockAcquired && arrLockAcquired)) {
+                throw new BaseException(ErrorCode.LOCK_ACQUISITION_FAILED,
+                        Map.of("departure Flight Lock", depLockAcquired,
+                                "arrival Flight Lock", arrLockAcquired));
+            }
+
+            return new RLock[]{depFlightLock, arrFlightLock};
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new BaseException(ErrorCode.LOCK_ACQUISITION_FAILED, "Lock acquisition interrupted", e);
+        }
+    }
+
+    private String getFlightLockKey(Long flightId) {
+        return String.format("flight:seats:%s", flightId);
+    }
+
+    // 결제 승인 비즈니스 로직
+    private PostPaymentConfirmResponse processPaymentConfirmation(PostPaymentConfirmRequest request) {
+        try {
+
+            // Request 구성
+            HttpEntity<PostPaymentConfirmRequest> entity = new HttpEntity<>(request, createAuthHeaders());
+
+            // 승인 요청
             ResponseEntity<PostPaymentConfirmResponse> response =
                     restTemplate.postForEntity(apiUrl, entity, PostPaymentConfirmResponse.class);
 
-            PostPaymentConfirmResponse body = response.getBody();
-            if (body == null) {
-                logger.error("Payment confirmation response body is null");
-                throw new RuntimeException("결제 승인 응답이 비어 있습니다.");
+            PostPaymentConfirmResponse paymentResponse = response.getBody();
+            if (paymentResponse == null) {
+                throw new BaseException(ErrorCode.PAYMENT_FAILED, "결제 승인 응답이 올바르지 않습니다.");
             }
 
-            // Reservation 추가 로직
-            logger.info(request.toString());
-            reservationService.createReservation(
-                    request,
-                    body,
-                    request.getDepFlightId(),
-                    request.getArrFlightId(),
-                    request.getSeatCount());
-
-            return body; // 성공 시 응답 반환
-
-        } catch (HttpClientErrorException e) {
-            // HTTP 4xx 클라이언트 오류 처리
-            logger.error("Client error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
-            throw new RuntimeException("결제 요청 오류 (클라이언트 오류): " + e.getResponseBodyAsString());
-
-        } catch (HttpServerErrorException e) {
-            // HTTP 5xx 서버 오류 처리
-            logger.error("Server error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
-            throw new RuntimeException("결제 요청 오류 (서버 오류): " + e.getResponseBodyAsString());
+            // Reservation 생성
+            createReservation(request, paymentResponse);
+            return paymentResponse;
 
         } catch (Exception e) {
-            // 기타 예외 처리
-            logger.error("Unexpected error: " + e.getMessage());
-            throw new RuntimeException("결제 요청 중 예기치 못한 오류 발생: " + e.getMessage());
+            logger.error("Payment confirmation failed", e);
+            throw new BaseException(ErrorCode.PAYMENT_FAILED, e.getMessage(), e);
+        }
+    }
+
+    private void createReservation(PostPaymentConfirmRequest paymentRequest,
+                                   PostPaymentConfirmResponse paymentResponse) {
+        reservationService.createReservation(
+                paymentRequest,
+                paymentResponse,
+                paymentRequest.getDepFlightId(),
+                paymentRequest.getArrFlightId(),
+                paymentRequest.getSeatCount()
+        );
+    }
+
+    private void releaseLocks(RLock[] locks) {
+        for (RLock lock : locks) {
+            if (lock != null && lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
         }
     }
 
     private HttpHeaders createAuthHeaders() {
         HttpHeaders headers = new HttpHeaders();
-        String authorizationHeader = "Basic " + Base64.getEncoder()
+        String encodedAuth = Base64.getEncoder()
                 .encodeToString((widgetSecretKey + ":").getBytes(StandardCharsets.UTF_8));
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", authorizationHeader);
+        headers.set(HttpHeaders.AUTHORIZATION, "Basic " + encodedAuth);
         return headers;
     }
 }
-
-
-

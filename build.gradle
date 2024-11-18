@@ -48,6 +48,10 @@ dependencies {
 
 	//AccessToken Decode 의존성 추가
 	implementation 'com.auth0:java-jwt:4.3.0'
+
+	// redisson 의존성 추가
+	implementation 'org.redisson:redisson-spring-boot-starter:3.17.0'
+
 }
 
 tasks.named('test') {
