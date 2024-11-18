@@ -1,10 +1,7 @@
 package wonpick.travel.server.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -46,7 +43,8 @@ public class Flight extends BaseEntity {
     private LocalDateTime arrivalTime;
 
     @Column(name = "max_seat", nullable = false)
-    private int maxSeat;
+    @Setter
+    private Long maxSeat;
 
     @Column(name = "origin_price", nullable = false)
     private int originPrice;
