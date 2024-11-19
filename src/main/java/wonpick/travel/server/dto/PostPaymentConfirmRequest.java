@@ -1,7 +1,10 @@
 package wonpick.travel.server.dto;
 
 
-import lombok.*;
+import lombok.Data;
+import lombok.ToString;
+
+import java.util.List;
 
 @Data
 @ToString
@@ -12,4 +15,5 @@ public class PostPaymentConfirmRequest {
     private Long depFlightId;
     private Long arrFlightId;
     private Long seatCount;
+    private List<FlightPassengerDTO> passengers;
 }
