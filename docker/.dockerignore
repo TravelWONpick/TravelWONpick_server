@@ -2,5 +2,5 @@
 .gitignore
 .gradle
 build
-!build/libs/*.jar
 *.md
+!build/*.jar
