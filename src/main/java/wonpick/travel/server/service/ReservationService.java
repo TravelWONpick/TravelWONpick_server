@@ -1,6 +1,5 @@
 package wonpick.travel.server.service;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,11 +39,9 @@ public class ReservationService {
         Flight inboundFlight = flightService.findFlightById(inboundFlightId);
 
         // journey 생성
-        String journey = String.format("%s (%s) -> %s (%s) / %s (%s) -> %s (%s)",
+        String journey = String.format("%s (%s) -> %s (%s)",
                 outboundFlight.getDeparturePlace(), outboundFlight.getDepartureAirportCode(),
-                outboundFlight.getArrivalPlace(), outboundFlight.getArrivalAirportCode(),
-                inboundFlight.getDeparturePlace(), inboundFlight.getDepartureAirportCode(),
-                inboundFlight.getArrivalPlace(), inboundFlight.getArrivalAirportCode());
+                outboundFlight.getArrivalPlace(), outboundFlight.getArrivalAirportCode());
 
         // Reservation 생성
         Reservation reservation = Reservation.builder()
@@ -61,8 +58,8 @@ public class ReservationService {
         reservation = reservationRepository.save(reservation);
 
         // 항공권 잔여석 차감
-        flightService.adjustFlightSeatCountWithLock(outboundFlightId, seatCount);
-        flightService.adjustFlightSeatCountWithLock(inboundFlightId, seatCount);
+        flightService.adjustFlightSeatCount(outboundFlightId, seatCount);
+        flightService.adjustFlightSeatCount(inboundFlightId, seatCount);
 
         // ReservationFlight 생성 및 저장
         createReservationFlight(reservation, outboundFlight);
