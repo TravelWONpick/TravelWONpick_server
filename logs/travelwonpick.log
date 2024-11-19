@@ -1,0 +1,316 @@
+2024-11-19 12:11:22 INFO  w.t.s.ServerApplication:50 - Starting ServerApplication using Java 17 with PID 4992 (C:\01.lab\TravelWONpick_server\build\classes\java\main started by 3-18 in C:\01.lab\TravelWONpick_server)
+2024-11-19 12:11:22 INFO  w.t.s.ServerApplication:654 - No active profile set, falling back to 1 default profile: "default"
+2024-11-19 12:11:22 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor:252 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-11-19 12:11:22 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor:252 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-11-19 12:11:24 INFO  o.s.d.r.c.RepositoryConfigurationDelegate:143 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-19 12:11:24 INFO  o.s.d.r.c.RepositoryConfigurationDelegate:211 - Finished Spring Data repository scanning in 125 ms. Found 9 JPA repository interfaces.
+2024-11-19 12:11:25 INFO  o.s.b.w.e.t.TomcatWebServer:111 - Tomcat initialized with port 8080 (http)
+2024-11-19 12:11:25 INFO  o.a.c.c.StandardService:173 - Starting service [Tomcat]
+2024-11-19 12:11:25 INFO  o.a.c.c.StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-11-19 12:11:26 INFO  o.a.c.c.C.[.[.[/]:173 - Initializing Spring embedded WebApplicationContext
+2024-11-19 12:11:26 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext:296 - Root WebApplicationContext: initialization completed in 3235 ms
+2024-11-19 12:11:26 INFO  o.h.j.i.u.LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-19 12:11:26 INFO  o.h.Version:44 - HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-11-19 12:11:26 INFO  o.h.c.i.RegionFactoryInitiator:50 - HHH000026: Second-level cache disabled
+2024-11-19 12:11:27 INFO  o.s.o.j.p.SpringPersistenceUnitInfo:87 - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-19 12:11:27 INFO  c.z.h.HikariDataSource:109 - HikariPool-1 - Starting...
+2024-11-19 12:11:27 INFO  c.z.h.p.HikariPool:554 - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3f201cd5
+2024-11-19 12:11:27 INFO  c.z.h.HikariDataSource:122 - HikariPool-1 - Start completed.
+2024-11-19 12:11:27 WARN  o.h.o.deprecation:153 - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-11-19 12:11:29 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator:59 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-19 12:11:30 WARN  o.h.t.s.i.ExceptionHandlerLoggedImpl:27 - GenerationTarget encountered exception accepting command : Error executing DDL "alter table card_category drop foreign key FK5dslqty64cl4vlgkx5pved0bt" via JDBC [Can't DROP 'FK5dslqty64cl4vlgkx5pved0bt'; check that column/key exists]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table card_category drop foreign key FK5dslqty64cl4vlgkx5pved0bt" via JDBC [Can't DROP 'FK5dslqty64cl4vlgkx5pved0bt'; check that column/key exists]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
+	at org.hibernate.tool.schema.internal.Helper.applySqlString(Helper.java:233)
+	at org.hibernate.tool.schema.internal.Helper.applySqlStrings(Helper.java:217)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applyConstraintDropping(SchemaDropperImpl.java:476)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropConstraintsTablesSequences(SchemaDropperImpl.java:242)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropFromMetadata(SchemaDropperImpl.java:215)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.performDrop(SchemaDropperImpl.java:185)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:155)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:115)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:238)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1420)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:322)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:457)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at wonpick.travel.server.ServerApplication.main(ServerApplication.java:10)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: java.sql.SQLSyntaxErrorException: Can't DROP 'FK5dslqty64cl4vlgkx5pved0bt'; check that column/key exists
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:770)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:653)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
+	... 44 common frames omitted
+2024-11-19 12:11:30 WARN  o.h.t.s.i.ExceptionHandlerLoggedImpl:27 - GenerationTarget encountered exception accepting command : Error executing DDL "alter table orders drop foreign key FKel9kyl84ego2otj2accfd8mr7" via JDBC [Table 'travelwonpick.orders' doesn't exist]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table orders drop foreign key FKel9kyl84ego2otj2accfd8mr7" via JDBC [Table 'travelwonpick.orders' doesn't exist]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
+	at org.hibernate.tool.schema.internal.Helper.applySqlString(Helper.java:233)
+	at org.hibernate.tool.schema.internal.Helper.applySqlStrings(Helper.java:217)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applyConstraintDropping(SchemaDropperImpl.java:476)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropConstraintsTablesSequences(SchemaDropperImpl.java:242)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropFromMetadata(SchemaDropperImpl.java:215)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.performDrop(SchemaDropperImpl.java:185)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:155)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:115)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:238)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1420)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:322)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:457)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at wonpick.travel.server.ServerApplication.main(ServerApplication.java:10)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: java.sql.SQLSyntaxErrorException: Table 'travelwonpick.orders' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:770)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:653)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
+	... 44 common frames omitted
+2024-11-19 12:11:30 WARN  o.h.t.s.i.ExceptionHandlerLoggedImpl:27 - GenerationTarget encountered exception accepting command : Error executing DDL "alter table reservation drop foreign key FKgihrw8x5n9ynawi330ompl717" via JDBC [Can't DROP 'FKgihrw8x5n9ynawi330ompl717'; check that column/key exists]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table reservation drop foreign key FKgihrw8x5n9ynawi330ompl717" via JDBC [Can't DROP 'FKgihrw8x5n9ynawi330ompl717'; check that column/key exists]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
+	at org.hibernate.tool.schema.internal.Helper.applySqlString(Helper.java:233)
+	at org.hibernate.tool.schema.internal.Helper.applySqlStrings(Helper.java:217)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applyConstraintDropping(SchemaDropperImpl.java:476)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropConstraintsTablesSequences(SchemaDropperImpl.java:242)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropFromMetadata(SchemaDropperImpl.java:215)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.performDrop(SchemaDropperImpl.java:185)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:155)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:115)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:238)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1420)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:322)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:457)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at wonpick.travel.server.ServerApplication.main(ServerApplication.java:10)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: java.sql.SQLSyntaxErrorException: Can't DROP 'FKgihrw8x5n9ynawi330ompl717'; check that column/key exists
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:770)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:653)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
+	... 44 common frames omitted
+2024-11-19 12:11:31 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-19 12:11:32 INFO  o.s.d.j.r.q.QueryEnhancerFactory:49 - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-11-19 12:11:34 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration:236 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-19 12:11:35 INFO  o.s.b.d.a.OptionalLiveReloadServer:59 - LiveReload server is running on port 35729
+2024-11-19 12:11:35 WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext:633 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2024-11-19 12:11:35 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean:650 - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-11-19 12:11:35 INFO  c.z.h.HikariDataSource:349 - HikariPool-1 - Shutdown initiated...
+2024-11-19 12:11:35 INFO  c.z.h.HikariDataSource:351 - HikariPool-1 - Shutdown completed.
+2024-11-19 12:11:35 INFO  o.s.b.a.l.ConditionEvaluationReportLogger:82 - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-11-19 12:11:35 ERROR o.s.b.d.LoggingFailureAnalysisReporter:40 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2024-11-19 12:15:06 INFO  w.t.s.ServerApplication:50 - Starting ServerApplication using Java 17 with PID 18028 (C:\01.lab\TravelWONpick_server\build\classes\java\main started by 3-18 in C:\01.lab\TravelWONpick_server)
+2024-11-19 12:15:06 INFO  w.t.s.ServerApplication:654 - No active profile set, falling back to 1 default profile: "default"
+2024-11-19 12:15:06 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor:252 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-11-19 12:15:06 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor:252 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-11-19 12:15:08 INFO  o.s.d.r.c.RepositoryConfigurationDelegate:143 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-19 12:15:08 INFO  o.s.d.r.c.RepositoryConfigurationDelegate:211 - Finished Spring Data repository scanning in 140 ms. Found 9 JPA repository interfaces.
+2024-11-19 12:15:09 INFO  o.s.b.w.e.t.TomcatWebServer:111 - Tomcat initialized with port 8080 (http)
+2024-11-19 12:15:09 INFO  o.a.c.c.StandardService:173 - Starting service [Tomcat]
+2024-11-19 12:15:09 INFO  o.a.c.c.StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-11-19 12:15:09 INFO  o.a.c.c.C.[.[.[/]:173 - Initializing Spring embedded WebApplicationContext
+2024-11-19 12:15:09 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext:296 - Root WebApplicationContext: initialization completed in 3113 ms
+2024-11-19 12:15:10 INFO  o.h.j.i.u.LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-19 12:15:10 INFO  o.h.Version:44 - HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-11-19 12:15:10 INFO  o.h.c.i.RegionFactoryInitiator:50 - HHH000026: Second-level cache disabled
+2024-11-19 12:15:10 INFO  o.s.o.j.p.SpringPersistenceUnitInfo:87 - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-19 12:15:10 INFO  c.z.h.HikariDataSource:109 - HikariPool-1 - Starting...
+2024-11-19 12:15:11 INFO  c.z.h.p.HikariPool:554 - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@64b214ac
+2024-11-19 12:15:11 INFO  c.z.h.HikariDataSource:122 - HikariPool-1 - Start completed.
+2024-11-19 12:15:11 WARN  o.h.o.deprecation:153 - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-11-19 12:15:13 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator:59 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-19 12:15:15 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-19 12:15:15 INFO  o.s.d.j.r.q.QueryEnhancerFactory:49 - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-11-19 12:15:18 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration:236 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-19 12:15:18 INFO  o.s.b.d.a.OptionalLiveReloadServer:59 - LiveReload server is running on port 35729
+2024-11-19 12:15:19 INFO  o.s.b.w.e.t.TomcatWebServer:243 - Tomcat started on port 8080 (http) with context path '/'
+2024-11-19 12:15:19 INFO  w.t.s.ServerApplication:56 - Started ServerApplication in 13.328 seconds (process running for 14.504)
+2024-11-19 12:19:49 INFO  o.a.c.c.C.[.[.[/]:173 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-11-19 12:19:49 INFO  o.s.w.s.DispatcherServlet:532 - Initializing Servlet 'dispatcherServlet'
+2024-11-19 12:19:49 INFO  o.s.w.s.DispatcherServlet:554 - Completed initialization in 86 ms
+2024-11-19 12:19:49 INFO  w.t.s.c.UserController:78 - [travelwonpick] 회원가입 요청 수신: 회원 이메일 - jiwodo8713@gianes.com, 요청 시간 - 2024-11-19 12:19:49
+2024-11-19 12:19:50 INFO  w.t.s.c.UserController:81 - [travelwonpick] 회원가입 성공: 회원 이메일 - jiwodo8713@gianes.com, 요청 시간 - 2024-11-19 12:19:50
+2024-11-19 12:32:48 INFO  w.t.s.ServerApplication:50 - Starting ServerApplication using Java 17 with PID 20948 (C:\01.lab\TravelWONpick_server\build\classes\java\main started by 3-18 in C:\01.lab\TravelWONpick_server)
+2024-11-19 12:32:48 INFO  w.t.s.ServerApplication:654 - No active profile set, falling back to 1 default profile: "default"
+2024-11-19 12:32:48 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor:252 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-11-19 12:32:48 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor:252 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-11-19 12:32:49 INFO  o.s.d.r.c.RepositoryConfigurationDelegate:143 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-19 12:32:49 INFO  o.s.d.r.c.RepositoryConfigurationDelegate:211 - Finished Spring Data repository scanning in 109 ms. Found 9 JPA repository interfaces.
+2024-11-19 12:32:50 INFO  o.s.b.w.e.t.TomcatWebServer:111 - Tomcat initialized with port 8080 (http)
+2024-11-19 12:32:50 INFO  o.a.c.c.StandardService:173 - Starting service [Tomcat]
+2024-11-19 12:32:50 INFO  o.a.c.c.StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-11-19 12:32:50 INFO  o.a.c.c.C.[.[.[/]:173 - Initializing Spring embedded WebApplicationContext
+2024-11-19 12:32:50 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext:296 - Root WebApplicationContext: initialization completed in 2142 ms
+2024-11-19 12:32:50 INFO  o.h.j.i.u.LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-19 12:32:50 INFO  o.h.Version:44 - HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-11-19 12:32:50 INFO  o.h.c.i.RegionFactoryInitiator:50 - HHH000026: Second-level cache disabled
+2024-11-19 12:32:51 INFO  o.s.o.j.p.SpringPersistenceUnitInfo:87 - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-19 12:32:51 INFO  c.z.h.HikariDataSource:109 - HikariPool-1 - Starting...
+2024-11-19 12:32:51 INFO  c.z.h.p.HikariPool:554 - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2d3ad14e
+2024-11-19 12:32:51 INFO  c.z.h.HikariDataSource:122 - HikariPool-1 - Start completed.
+2024-11-19 12:32:51 WARN  o.h.o.deprecation:153 - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-11-19 12:32:52 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator:59 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-19 12:32:52 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-19 12:32:53 INFO  o.s.d.j.r.q.QueryEnhancerFactory:49 - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-11-19 12:32:55 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration:236 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-19 12:32:55 INFO  o.s.b.d.a.OptionalLiveReloadServer:59 - LiveReload server is running on port 35729
+2024-11-19 12:32:55 INFO  o.s.b.w.e.t.TomcatWebServer:243 - Tomcat started on port 8080 (http) with context path '/'
+2024-11-19 12:32:55 INFO  w.t.s.ServerApplication:56 - Started ServerApplication in 8.377 seconds (process running for 9.248)
+2024-11-19 12:33:49 INFO  o.a.c.c.C.[.[.[/]:173 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-11-19 12:33:49 INFO  o.s.w.s.DispatcherServlet:532 - Initializing Servlet 'dispatcherServlet'
+2024-11-19 12:33:49 INFO  o.s.w.s.DispatcherServlet:554 - Completed initialization in 1 ms
+2024-11-19 12:33:49 INFO  w.t.s.c.UserController:96 - [travelwonpick] 로그인 요청 수신: 회원 이메일 - jiwodo8713@gianes.com, 요청 시간 - 2024-11-19 12:33:49
+2024-11-19 12:33:49 WARN  w.t.s.c.UserController:103 - [travelwonpick] 로그인 실패: 회원 이메일 - jiwodo8713@gianes.com, 오류 - 로그인 중 오류가 발생했습니다: The security token included in the request is invalid.
+2024-11-19 12:35:17 INFO  w.t.s.c.UserController:41 - [travelwonpick] 인증번호 전송 요청 수신: 회원 이메일 - dldusgmlalal@naver.com, 요청 시간 - 2024-11-19 12:35:17
+2024-11-19 12:35:17 INFO  w.t.s.c.UserController:45 - [travelwonpick] 인증번호 전송 성공: 회원 이메일 - dldusgmlalal@naver.com, 요청 시간 - 2024-11-19 12:35:17
+2024-11-19 12:35:36 INFO  w.t.s.c.UserController:64 - [travelwonpick] 인증번호 확인 요청 수신: 회원 이메일 - dldusgmlalal@naver.com, 요청 시간 - 2024-11-19 12:35:36
+2024-11-19 12:35:37 INFO  w.t.s.c.UserController:67 - [travelwonpick] 인증번호 확인 성공: 회원 이메일 - dldusgmlalal@naver.com, 요청 시간 - 2024-11-19 12:35:37
+2024-11-19 12:35:42 INFO  w.t.s.c.UserController:78 - [travelwonpick] 회원가입 요청 수신: 회원 이메일 - dldusgmlalal@naver.com, 요청 시간 - 2024-11-19 12:35:42
+2024-11-19 12:35:42 INFO  w.t.s.c.UserController:81 - [travelwonpick] 회원가입 성공: 회원 이메일 - dldusgmlalal@naver.com, 요청 시간 - 2024-11-19 12:35:42
+2024-11-19 12:35:57 INFO  w.t.s.c.UserController:96 - [travelwonpick] 로그인 요청 수신: 회원 이메일 - dldusgmlalal@naver.com, 요청 시간 - 2024-11-19 12:35:57
+2024-11-19 12:35:57 WARN  w.t.s.c.UserController:103 - [travelwonpick] 로그인 실패: 회원 이메일 - dldusgmlalal@naver.com, 오류 - 로그인 중 오류가 발생했습니다: The security token included in the request is invalid.
+2024-11-19 12:39:57 INFO  w.t.s.ServerApplication:50 - Starting ServerApplication using Java 17 with PID 12032 (C:\01.lab\TravelWONpick_server\build\classes\java\main started by 3-18 in C:\01.lab\TravelWONpick_server)
+2024-11-19 12:39:57 INFO  w.t.s.ServerApplication:654 - No active profile set, falling back to 1 default profile: "default"
+2024-11-19 12:39:57 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor:252 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-11-19 12:39:57 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor:252 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-11-19 12:39:58 INFO  o.s.d.r.c.RepositoryConfigurationDelegate:143 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-19 12:39:58 INFO  o.s.d.r.c.RepositoryConfigurationDelegate:211 - Finished Spring Data repository scanning in 91 ms. Found 9 JPA repository interfaces.
+2024-11-19 12:39:59 INFO  o.s.b.w.e.t.TomcatWebServer:111 - Tomcat initialized with port 8080 (http)
+2024-11-19 12:39:59 INFO  o.a.c.c.StandardService:173 - Starting service [Tomcat]
+2024-11-19 12:39:59 INFO  o.a.c.c.StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-11-19 12:39:59 INFO  o.a.c.c.C.[.[.[/]:173 - Initializing Spring embedded WebApplicationContext
+2024-11-19 12:39:59 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext:296 - Root WebApplicationContext: initialization completed in 2108 ms
+2024-11-19 12:40:00 INFO  o.h.j.i.u.LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-19 12:40:00 INFO  o.h.Version:44 - HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-11-19 12:40:00 INFO  o.h.c.i.RegionFactoryInitiator:50 - HHH000026: Second-level cache disabled
+2024-11-19 12:40:00 INFO  o.s.o.j.p.SpringPersistenceUnitInfo:87 - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-19 12:40:00 INFO  c.z.h.HikariDataSource:109 - HikariPool-1 - Starting...
+2024-11-19 12:40:01 INFO  c.z.h.p.HikariPool:554 - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6f7e393e
+2024-11-19 12:40:01 INFO  c.z.h.HikariDataSource:122 - HikariPool-1 - Start completed.
+2024-11-19 12:40:01 WARN  o.h.o.deprecation:153 - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-11-19 12:40:02 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator:59 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-19 12:40:02 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-19 12:40:03 INFO  o.s.d.j.r.q.QueryEnhancerFactory:49 - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-11-19 12:40:05 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration:236 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-19 12:40:05 INFO  o.s.b.d.a.OptionalLiveReloadServer:59 - LiveReload server is running on port 35729
+2024-11-19 12:40:06 INFO  o.s.b.w.e.t.TomcatWebServer:243 - Tomcat started on port 8080 (http) with context path '/'
+2024-11-19 12:40:06 INFO  w.t.s.ServerApplication:56 - Started ServerApplication in 9.021 seconds (process running for 9.844)
+2024-11-19 12:40:20 INFO  o.a.c.c.C.[.[.[/]:173 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-11-19 12:40:20 INFO  o.s.w.s.DispatcherServlet:532 - Initializing Servlet 'dispatcherServlet'
+2024-11-19 12:40:20 INFO  o.s.w.s.DispatcherServlet:554 - Completed initialization in 1 ms
+2024-11-19 12:40:20 INFO  w.t.s.c.UserController:96 - [travelwonpick] 로그인 요청 수신: 회원 이메일 - dldusgmlalal@naver.com, 요청 시간 - 2024-11-19 12:40:20
+2024-11-19 12:40:21 INFO  w.t.s.c.UserController:100 - [travelwonpick] 로그인 성공: 회원 이메일 - dldusgmlalal@naver.com, 요청 시간 - 2024-11-19 12:40:21
+2024-11-19 14:03:58 WARN  c.z.h.p.HikariPool:797 - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m26s593ms460µs500ns).
+2024-11-19 15:40:13 WARN  c.z.h.p.HikariPool:797 - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=48m14s870ms761µs100ns).
