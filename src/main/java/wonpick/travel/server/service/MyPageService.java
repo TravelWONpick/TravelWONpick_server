@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import wonpick.travel.server.dto.*;
 import wonpick.travel.server.entity.*;
@@ -26,6 +28,8 @@ public class MyPageService {
     private final UserPassengerRepository userPassengerRepository;
     private final ReservationRepository reservationRepository;
     private final OrderRepository orderRepository;
+    private static final Logger logger = LogManager.getLogger(MyPageService.class);
+
 
     @Transactional
     public UserDTO getUserInfo(String accessToken) {
@@ -100,7 +104,9 @@ public class MyPageService {
         ArrayList<Reservation> reservations = new ArrayList<>();
         orders.forEach(order -> {
             Reservation reservation = reservationRepository.findByOrderWithOrderSeqId(order.getId());
-            reservations.add(reservation);
+            if (reservation != null) {
+                reservations.add(reservation);
+            }
         });
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -212,9 +218,6 @@ public class MyPageService {
                 inFlightDetails.getArrivalTime() != null ? inFlightDetails.getArrivalTime().toString() : "도착 시간 정보 없음"
         );
     }
-
-
-
 
 
     @Transactional
