@@ -125,24 +125,19 @@ public class PaymentService {
             }
 
             // Reservation 생성
-            createReservation(request, paymentResponse);
+            reservationService.createReservation(
+                    request,
+                    paymentResponse,
+                    request.getDepFlightId(),
+                    request.getArrFlightId(),
+                    request.getSeatCount()
+            );
             return paymentResponse;
 
         } catch (Exception e) {
             logger.error("Payment confirmation failed", e);
             throw new BaseException(ErrorCode.PAYMENT_FAILED, e.getMessage(), e);
         }
-    }
-
-    private void createReservation(PostPaymentConfirmRequest paymentRequest,
-                                   PostPaymentConfirmResponse paymentResponse) {
-        reservationService.createReservation(
-                paymentRequest,
-                paymentResponse,
-                paymentRequest.getDepFlightId(),
-                paymentRequest.getArrFlightId(),
-                paymentRequest.getSeatCount()
-        );
     }
 
     private void releaseLocks(RLock[] locks) {
