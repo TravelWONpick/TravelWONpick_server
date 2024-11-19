@@ -29,7 +29,10 @@ public enum ErrorCode {
 
     // Lock Related Errors
     LOCK_ACQUISITION_FAILED(HttpStatus.CONFLICT, "L001", "Lock 획득에 실패했습니다."),
-    LOCK_TIMEOUT(HttpStatus.REQUEST_TIMEOUT, "L002", "Lock 획득 TIMEOUT");
+    LOCK_TIMEOUT(HttpStatus.REQUEST_TIMEOUT, "L002", "Lock 획득 TIMEOUT"),
+
+    // Passenger Related Errors
+    INVALID_PASSENGER(HttpStatus.BAD_REQUEST, "7000", "승객 정보가 올바르지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
