@@ -92,26 +92,16 @@ public class MyPageService {
         DecodedJWT jwt = JWT.decode(accessToken);
         String sub = jwt.getSubject();
 
-        // sub 값으로 사용자 조회
+        // 사용자 ID 조회
         Long userId = userRepository.findBySub(sub)
                 .orElseThrow(() -> new RuntimeException("해당 사용자를 찾을 수 없습니다.")).getId();
 
-        // 해당 사용자의 주문 내역 조회
-        List<Order> orders = orderRepository.findByUserId(userId);
-
-
-        // 해당 사용자의 예약 내역 조회
-        ArrayList<Reservation> reservations = new ArrayList<>();
-        orders.forEach(order -> {
-            Reservation reservation = reservationRepository.findByOrderWithOrderSeqId(order.getId());
-            if (reservation != null) {
-                reservations.add(reservation);
-            }
-        });
+        // 페치 조인으로 예약 내역 조회
+        List<Reservation> reservations = reservationRepository.findReservationsByUserIdWithOrders(userId);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-        // 필요한 정보만 포함하는 DTO로 변환
+        // DTO로 변환
         return reservations.stream()
                 .map(reservation -> new ReservationDTO(
                         reservation.getOrder().getOrderId(),

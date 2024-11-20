@@ -8,8 +8,8 @@ import wonpick.travel.server.entity.Reservation;
 import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-//    List<Reservation> findByUserId(Long userId);
 
-    @Query("SELECT r FROM Reservation r JOIN FETCH r.order WHERE r.order.id = :orderSeqId")
-    Reservation findByOrderWithOrderSeqId(@Param("orderSeqId") Long orderSeqId);
-    }
+    @Query("SELECT r FROM Reservation r JOIN FETCH r.order o WHERE o.user.id = :userId")
+    List<Reservation> findReservationsByUserIdWithOrders(@Param("userId") Long userId);
+
+}
