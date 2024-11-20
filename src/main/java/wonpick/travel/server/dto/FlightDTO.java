@@ -20,4 +20,5 @@ public class FlightDTO {
     private String departureAirportCode;
     private String arrivalAirportCode;
     private String baggage;
+    private Long maxSeat;
 }

@@ -15,11 +15,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class FlightService {
-//    private static final int LOCK_WAIT_TIME = 10;
-//    private static final int LOCK_LEASE_TIME = 5;
 
     private final FlightRepository flightRepository;
-//    private final RedissonClient redissonClient;
 
 
     public Flight findFlightById(Long flightId) {
@@ -46,6 +43,7 @@ public class FlightService {
                                 .departureAirportCode(flight.getDepartureAirportCode())
                                 .arrivalAirportCode(flight.getArrivalAirportCode())
                                 .baggage(flight.getBaggage())
+                                .maxSeat(flight.getMaxSeat())
                                 .build()
 
                 )
@@ -53,34 +51,6 @@ public class FlightService {
 
     }
 
-
-    //    public void adjustFlightSeatCountWithLock(Long flightId, Long seatCount) {
-//        RLock lock = redissonClient.getLock("flight:seats:" + flightId);
-//
-//        try {
-//            if (lock.tryLock(LOCK_WAIT_TIME, LOCK_LEASE_TIME, TimeUnit.SECONDS)) {
-//                Flight flight = flightRepository.findById(flightId)
-//                        .orElseThrow(() -> new RuntimeException("해당 항공편을 찾을 수 없습니다."));
-//
-//                if (flight.getMaxSeat() >= seatCount) {
-//                    flight.setMaxSeat(flight.getMaxSeat() - seatCount);
-//                    flightRepository.save(flight);
-//                } else {
-//                    throw new RuntimeException("잔여 좌석이 부족합니다.");
-//                }
-//            } else {
-//                throw new RuntimeException("좌석 차감에 대한 락을 획득할 수 없습니다.");
-//            }
-//        } catch (InterruptedException e) {
-//            Thread.currentThread().interrupt();
-//            throw new RuntimeException("좌석 차감 과정에서 오류가 발생했습니다.", e);
-//        } finally {
-//            if (lock.isHeldByCurrentThread()) {
-//                lock.unlock();
-//            }
-//        }
-//    }
-    //
     public void adjustFlightSeatCount(Long flightId, Long seatCount) {
         Flight flight = flightRepository.findById(flightId)
                 .orElseThrow(() -> new RuntimeException("해당 항공편을 찾을 수 없습니다."));
