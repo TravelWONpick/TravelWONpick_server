@@ -49,6 +49,9 @@ dependencies {
 	//AccessToken Decode 의존성 추가
 	implementation 'com.auth0:java-jwt:4.3.0'
 
+	//.env 파일 사용을 위한 의존성 추가
+	implementation 'me.paulschwarz:spring-dotenv:3.0.0'
+
 	// redisson 의존성 추가
 	implementation 'org.redisson:redisson-spring-boot-starter:3.17.0'
 
@@ -56,4 +59,10 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jar {
+	exclude 'docker/**'
+	exclude 'Dockerfile'
+	exclude '.dockerignore'
 }
