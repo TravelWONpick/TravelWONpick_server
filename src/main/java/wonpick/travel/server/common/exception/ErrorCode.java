@@ -27,6 +27,11 @@ public enum ErrorCode {
     RESERVATION_NOT_FOUND(HttpStatus.NOT_FOUND, "R002", "Reservation not found"),
     INVALID_FLIGHT(HttpStatus.BAD_REQUEST, "R003", "Invalid flight information"),
 
+    // Flight Related Errors
+    SEAT_COUNT_EXCEEDS(HttpStatus.BAD_REQUEST, "F001", "잔여 좌석이 부족합니다."),
+    FLIGHT_NOT_FOUND(HttpStatus.NOT_FOUND, "F002", "해당 항공편을 찾을 수 없습니다."),
+
+
     // Lock Related Errors
     LOCK_ACQUISITION_FAILED(HttpStatus.CONFLICT, "L001", "Lock 획득에 실패했습니다."),
     LOCK_TIMEOUT(HttpStatus.REQUEST_TIMEOUT, "L002", "Lock 획득 TIMEOUT"),
