@@ -24,8 +24,7 @@ spring:
 
   data:
     redis:
-      host: "${REDIS_URL}"
-      port: 6379
+      url: redis://${REDIS_URL}
 
 server:
   servlet:
