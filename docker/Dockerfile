@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Gradle의 경우
-COPY build/*.jar app.jar
+COPY build/libs/*.jar app.jar
 
 # 포트 설정
 EXPOSE 8080
