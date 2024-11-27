@@ -4,8 +4,8 @@ FROM openjdk:17-jdk-slim
 # 작업 디렉토리 설정
 WORKDIR /app
 
-# Gradle의 경우
-COPY build/libs/*.jar app.jar
+# docker/build 디렉토리에서 복사
+COPY build/app.jar app.jar
 
 # 포트 설정
 EXPOSE 8080
