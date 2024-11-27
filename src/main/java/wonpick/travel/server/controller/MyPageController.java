@@ -12,7 +12,6 @@ import wonpick.travel.server.service.MyPageService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RestController
 @RequestMapping("/my")
 @RequiredArgsConstructor

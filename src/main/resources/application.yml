@@ -16,7 +16,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
@@ -56,3 +56,7 @@ toss:
   api:
     url: "${TOSS_API_URL}"
     widget-secret-key: "${TOSS_WIDGET_SECRET_KEY}"
+
+app:
+  cors:
+    allowed-origins: "${CORS_ALLOWED_ORIGINS:http://localhost:5173}"
