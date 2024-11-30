@@ -55,6 +55,9 @@ dependencies {
 	// redisson 의존성 추가
 	implementation 'org.redisson:redisson-spring-boot-starter:3.17.0'
 
+	// Prometheus 메트릭을 위한 의존성 추가
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'io.micrometer:micrometer-registry-prometheus'
 }
 
 tasks.named('test') {
