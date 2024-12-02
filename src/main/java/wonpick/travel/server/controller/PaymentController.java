@@ -64,7 +64,7 @@ public class PaymentController {
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            logger.error("[travelwonpick] 결제 확인 실패: orderId=" + request.getOrderId(), e);
+            logger.error("[travelwonpick] 결제 실패: orderId=" + request.getOrderId(), e);
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
