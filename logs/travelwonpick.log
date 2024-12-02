@@ -1339,3 +1339,51 @@ Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'sp
 	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145)
 	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509)
 	... 109 common frames omitted
+2024-12-02 11:23:29 INFO  w.t.s.ServerApplication:50 - Starting ServerApplication using Java 17 with PID 11372 (C:\01.lab\TravelWONpick_server\build\classes\java\main started by 3-18 in C:\01.lab\TravelWONpick_server)
+2024-12-02 11:23:29 INFO  w.t.s.ServerApplication:654 - No active profile set, falling back to 1 default profile: "default"
+2024-12-02 11:23:29 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor:252 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-12-02 11:23:29 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor:252 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-12-02 11:23:31 INFO  o.s.d.r.c.RepositoryConfigurationDelegate:295 - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-02 11:23:31 INFO  o.s.d.r.c.RepositoryConfigurationDelegate:143 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-12-02 11:23:32 INFO  o.s.d.r.c.RepositoryConfigurationDelegate:211 - Finished Spring Data repository scanning in 393 ms. Found 10 JPA repository interfaces.
+2024-12-02 11:23:34 INFO  o.s.b.w.e.t.TomcatWebServer:111 - Tomcat initialized with port 8080 (http)
+2024-12-02 11:23:34 INFO  o.a.c.c.StandardService:173 - Starting service [Tomcat]
+2024-12-02 11:23:34 INFO  o.a.c.c.StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-12-02 11:23:34 INFO  o.a.c.c.C.[.[.[/]:173 - Initializing Spring embedded WebApplicationContext
+2024-12-02 11:23:34 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext:296 - Root WebApplicationContext: initialization completed in 4241 ms
+2024-12-02 11:23:34 INFO  o.h.j.i.u.LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-02 11:23:35 INFO  o.h.Version:44 - HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-12-02 11:23:35 INFO  o.h.c.i.RegionFactoryInitiator:50 - HHH000026: Second-level cache disabled
+2024-12-02 11:23:35 INFO  o.s.o.j.p.SpringPersistenceUnitInfo:87 - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-12-02 11:23:35 INFO  c.z.h.HikariDataSource:109 - HikariPool-1 - Starting...
+2024-12-02 11:23:35 INFO  c.z.h.p.HikariPool:554 - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6e122cce
+2024-12-02 11:23:35 INFO  c.z.h.HikariDataSource:122 - HikariPool-1 - Start completed.
+2024-12-02 11:23:35 WARN  o.h.o.deprecation:153 - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-12-02 11:23:37 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator:59 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-12-02 11:23:37 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-12-02 11:23:38 INFO  o.s.d.j.r.q.QueryEnhancerFactory:49 - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-12-02 11:23:40 INFO  o.r.Version:41 - Redisson 3.17.0
+2024-12-02 11:23:41 INFO  o.r.c.p.MasterPubSubConnectionPool:161 - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+2024-12-02 11:23:41 INFO  o.r.c.p.MasterConnectionPool:161 - 24 connections initialized for 127.0.0.1/127.0.0.1:6379
+2024-12-02 11:23:42 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration:236 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-02 11:23:43 INFO  o.s.b.d.a.OptionalLiveReloadServer:59 - LiveReload server is running on port 35729
+2024-12-02 11:23:43 INFO  o.s.b.a.e.w.EndpointLinksResolver:60 - Exposing 4 endpoints beneath base path '/actuator'
+2024-12-02 11:23:43 INFO  o.s.b.w.e.t.TomcatWebServer:243 - Tomcat started on port 8080 (http) with context path '/'
+2024-12-02 11:23:43 INFO  w.t.s.ServerApplication:56 - Started ServerApplication in 14.678 seconds (process running for 15.501)
+2024-12-02 11:28:44 INFO  o.a.c.c.C.[.[.[/]:173 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-02 11:28:44 INFO  o.s.w.s.DispatcherServlet:532 - Initializing Servlet 'dispatcherServlet'
+2024-12-02 11:28:44 INFO  o.s.w.s.DispatcherServlet:554 - Completed initialization in 3 ms
+2024-12-02 11:28:45 INFO  w.t.s.c.MyPageController:155 - [travelwonpick] 탑승객 정보 조회
+2024-12-02 11:28:50 INFO  w.t.s.c.MyPageController:155 - [travelwonpick] 탑승객 정보 조회
+2024-12-02 11:28:53 INFO  w.t.s.c.UserController:110 - [travelwonpick] 로그아웃 요청 수신, 요청 시간 - 2024-12-02 11:28:53
+2024-12-02 11:28:53 INFO  w.t.s.c.UserController:115 - Received accessToken: eyJraWQiOiI1a0VFUTlkQ1B1TVA4SXRkOVB4dGp4Q2VoS3FBdzZxSmo2M2pUR3hCV2o0PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI4NGY4MGRjYy0wMGYxLTcwMGEtYzk1NC03OWQxOGI0NTM2YzIiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtbm9ydGhlYXN0LTIuYW1hem9uYXdzLmNvbVwvYXAtbm9ydGhlYXN0LTJfSEdEeGNXWVpmIiwiY2xpZW50X2lkIjoiNmNzaGJxM2M1aDdsNTlqbWFwc3BqZGxoaGoiLCJvcmlnaW5fanRpIjoiYzQ2MWUwNmQtYjM5Zi00NTMxLTk1ZDUtZmRkNTZmOWVmOTU2IiwiZXZlbnRfaWQiOiIzZTJiZWUwMy1mY2MxLTQ0NmQtODk0NS0zNjQwYWZlMTA1MTMiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNzMzMTA1MTc2LCJleHAiOjE3MzMxMDg3NzYsImlhdCI6MTczMzEwNTE3NiwianRpIjoiMjQzNWZjMmItMjc3Ni00NGFiLTk0MGEtNzY0N2MzYjE2ZGI0IiwidXNlcm5hbWUiOiI4NGY4MGRjYy0wMGYxLTcwMGEtYzk1NC03OWQxOGI0NTM2YzIifQ.lrpvQgHZ5KokjsofxtLvHs6a99zcGkn1gnzAVrfQPaMg1D_5BEoDb-QG41WCiKjpZfDqIUKkVhXZb7zFwp_mvuQGFH9D0OkzAdCtiwV8pVbmIimazt-M7sklNuqZVAZbXuHsCwmDdwm12NLdH9-kZ7spvvFYRp0UaahDKzB2CAc-dXHynZcNim4heOekcKnPbfynUGQwBremtPzwgWCovbLM26fMncVRUS1UDdYlRPk7mQyvZGpRxos4lZIKkr1opxDDx1_kajnE9JQxMj9OIg1biCZrthZVDIUxRGaW9Rb8-BNCu89TDwCvkESCTqnUZOTM96izcGGp2IGdqpkSQg
+2024-12-02 11:28:54 INFO  w.t.s.c.UserController:118 - [travelwonpick] 로그아웃 성공, 요청 시간 - 2024-12-02 11:28:54
+2024-12-02 11:28:58 INFO  w.t.s.c.UserController:95 - [travelwonpick] 로그인 요청 수신: 회원 이메일 - dldusgmlalal@naver.com, 요청 시간 - 2024-12-02 11:28:58
+2024-12-02 11:28:58 INFO  w.t.s.c.UserController:99 - [travelwonpick] 로그인 성공: 회원 이메일 - dldusgmlalal@naver.com, 요청 시간 - 2024-12-02 11:28:58
+2024-12-02 11:29:02 INFO  w.t.s.c.MyPageController:82 - [travelwonpick] 예약 내역 조회 요청
+2024-12-02 11:29:06 INFO  w.t.s.c.MyPageController:155 - [travelwonpick] 탑승객 정보 조회
+2024-12-02 11:29:07 INFO  w.t.s.c.MyPageController:155 - [travelwonpick] 탑승객 정보 조회
+2024-12-02 11:29:11 INFO  w.t.s.c.SpecialPriceController:25 - [teavelwonpick] 특가픽 리스트 조회
+2024-12-02 11:29:12 INFO  w.t.s.c.CardController:27 - [travelwonpick] card 조회 api 요청
+2024-12-02 11:29:14 INFO  w.t.s.c.EventController:36 - [travelwonpick] 이벤트 목록 조회
+2024-12-02 11:29:15 INFO  w.t.s.c.SpecialPriceController:25 - [teavelwonpick] 특가픽 리스트 조회

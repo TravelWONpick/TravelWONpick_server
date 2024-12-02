@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/events")
+@RequestMapping("/my")
 public class EventController {
 
     private final EventService eventService;
@@ -31,7 +31,7 @@ public class EventController {
     }
 
     // 전체 이벤트 목록 조회
-    @GetMapping
+    @GetMapping("/events")
     public ResponseEntity<BaseResponse<GetEventListResponse>> getAllEvents() {
         logger.info("[travelwonpick] 이벤트 목록 조회");
         List<EventDTO> eventList = eventService.getAllEvents();
