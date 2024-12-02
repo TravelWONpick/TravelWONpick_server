@@ -11,13 +11,23 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${app.cors.allowed-origins}")
     private String allowedOrigins;
     
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//
+//        registry.addMapping("/**")
+//                .allowedOrigins(allowedOrigins)
+//                .allowCredentials(true)
+//                .allowedMethods("GET", "POST", "PUT", "DELETE")
+//                .allowedHeaders("*");
+//    }
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-
         registry.addMapping("/**")
-                .allowedOrigins(allowedOrigins)
-                .allowCredentials(true)
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowedHeaders("*");
+                .allowedOrigins("*")  // 모든 오리진 허용
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(false)  // allowedOrigins가 "*"일 때는 false로 설정해야 함
+                .maxAge(3600);
     }
 }

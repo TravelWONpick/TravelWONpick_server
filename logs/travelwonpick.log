@@ -1387,3 +1387,71 @@ Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'sp
 2024-12-02 11:29:12 INFO  w.t.s.c.CardController:27 - [travelwonpick] card 조회 api 요청
 2024-12-02 11:29:14 INFO  w.t.s.c.EventController:36 - [travelwonpick] 이벤트 목록 조회
 2024-12-02 11:29:15 INFO  w.t.s.c.SpecialPriceController:25 - [teavelwonpick] 특가픽 리스트 조회
+2024-12-02 11:56:28 INFO  w.t.s.c.SpecialPriceController:25 - [teavelwonpick] 특가픽 리스트 조회
+2024-12-02 11:56:32 INFO  w.t.s.c.CardController:27 - [travelwonpick] card 조회 api 요청
+2024-12-02 11:59:58 INFO  w.t.s.c.CardController:27 - [travelwonpick] card 조회 api 요청
+2024-12-02 12:02:48 INFO  w.t.s.c.CardController:27 - [travelwonpick] card 조회 api 요청
+2024-12-02 12:03:07 INFO  w.t.s.c.CardController:27 - [travelwonpick] card 조회 api 요청
+2024-12-02 12:23:40 INFO  w.t.s.c.EventController:36 - [travelwonpick] 이벤트 목록 조회
+2024-12-02 12:23:42 INFO  w.t.s.c.SpecialPriceController:25 - [teavelwonpick] 특가픽 리스트 조회
+2024-12-02 12:23:46 INFO  w.t.s.c.SpecialPriceController:25 - [teavelwonpick] 특가픽 리스트 조회
+2024-12-02 12:23:48 INFO  w.t.s.c.SpecialPriceController:25 - [teavelwonpick] 특가픽 리스트 조회
+2024-12-02 12:23:55 INFO  w.t.s.c.EventController:36 - [travelwonpick] 이벤트 목록 조회
+2024-12-02 12:24:52 INFO  w.t.s.c.EventController:36 - [travelwonpick] 이벤트 목록 조회
+2024-12-02 12:25:46 INFO  w.t.s.c.SpecialPriceController:25 - [teavelwonpick] 특가픽 리스트 조회
+2024-12-02 12:25:49 INFO  w.t.s.c.SpecialPriceController:25 - [teavelwonpick] 특가픽 리스트 조회
+2024-12-02 12:25:53 INFO  w.t.s.c.SpecialPriceController:25 - [teavelwonpick] 특가픽 리스트 조회
+2024-12-02 12:25:58 INFO  w.t.s.c.EventController:36 - [travelwonpick] 이벤트 목록 조회
+2024-12-02 12:26:01 INFO  w.t.s.c.SpecialPriceController:25 - [teavelwonpick] 특가픽 리스트 조회
+2024-12-02 12:26:02 INFO  w.t.s.c.EventController:36 - [travelwonpick] 이벤트 목록 조회
+2024-12-02 12:26:04 INFO  w.t.s.c.SpecialPriceController:25 - [teavelwonpick] 특가픽 리스트 조회
+2024-12-02 12:26:05 INFO  w.t.s.c.EventController:36 - [travelwonpick] 이벤트 목록 조회
+2024-12-02 12:33:25 ERROR w.t.s.c.e.GlobalExceptionHandler:32 - HandleException: No static resource my/events.
+org.springframework.web.servlet.resource.NoResourceFoundException: No static resource my/events.
+	at org.springframework.web.servlet.resource.ResourceHttpRequestHandler.handleRequest(ResourceHttpRequestHandler.java:585)
+	at org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter.handle(HttpRequestHandlerAdapter.java:52)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:113)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-12-02 12:33:25 WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver:247 - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource my/events.]
