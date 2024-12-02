@@ -13,6 +13,9 @@ import wonpick.travel.server.dto.*;
 import wonpick.travel.server.dto.BaseResponse;
 import wonpick.travel.server.service.PaymentService;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -46,17 +49,22 @@ public class PaymentController {
     }
 
 
-
     @PostMapping("/payments/confirm")
     public ResponseEntity<?> confirmPayment(@RequestBody PostPaymentConfirmRequest request) {
         logger.info("PaymentController.confirmPayment");
 
+        logger.info("[travelwonpick] 결제 확인 요청 수신: " +
+                "orderId=" + request.getOrderId() +
+                ", 요청 시간=" + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(ZonedDateTime.now()));
         try {
             PostPaymentConfirmResponse response = paymentService.confirmPayment(request);
-            logger.info("confirm: " + response.toString());
+
+            logger.info("[travelwonpick] 결제 확인 성공: orderId=" + request.getOrderId() +
+                    ", 탑승객 수=" + request.getSeatCount());
+
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            logger.error("Payment confirmation failed", e);
+            logger.error("[travelwonpick] 결제 실패: orderId=" + request.getOrderId(), e);
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }

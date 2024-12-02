@@ -181,6 +181,11 @@ public class MyPageController {
         try {
             String accessToken = authHeader.replace("Bearer ", "");
             Long passengerId = myPageService.createPassenger(accessToken, requestDTO);
+
+            logger.info("[travelwonpick] 탑승객 등록 성공: passengerId=" + passengerId +
+                    ", birth=" + requestDTO.getBirth() +
+                    ", gender=" + requestDTO.getGender());
+
             PostPassengerResponseDTO responseDTO = PostPassengerResponseDTO.builder()
                     .id(passengerId)
                     .build();
