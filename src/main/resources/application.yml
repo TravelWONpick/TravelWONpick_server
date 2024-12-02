@@ -24,7 +24,7 @@ spring:
 
   data:
     redis:
-      url: "${REDIS_URL}"
+      host: "${REDIS_URL}"
       port: 6379
 
 server:
@@ -76,4 +76,4 @@ toss:
 
 app:
   cors:
-    allowed-origins: "${CORS_ALLOWED_ORIGINS:http://localhost:5173}"
+    allowed-origins: "${CORS_ALLOWED_ORIGINS}"
