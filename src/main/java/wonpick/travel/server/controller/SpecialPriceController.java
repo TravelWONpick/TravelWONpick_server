@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api")
 public class SpecialPriceController {
     private final SpecialPriceService specialPriceService;
     private final FlightService flightService;
