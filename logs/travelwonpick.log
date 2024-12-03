@@ -1455,3 +1455,5 @@ org.springframework.web.servlet.resource.NoResourceFoundException: No static res
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:833)
 2024-12-02 12:33:25 WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver:247 - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource my/events.]
+2024-12-02 13:54:47 WARN  c.z.h.p.HikariPool:797 - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=31m9s719ms467µs).
+2024-12-02 14:20:39 INFO  w.t.s.c.EventController:36 - [travelwonpick] 이벤트 목록 조회

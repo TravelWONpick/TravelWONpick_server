@@ -40,7 +40,6 @@ server:
     session:
       timeout: 1h
 
-# Prometheus 메트릭 설정 추가
 management:
   endpoints:
     web:
