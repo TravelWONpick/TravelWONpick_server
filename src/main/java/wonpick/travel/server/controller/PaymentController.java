@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("api")
 public class PaymentController {
 
     private final PaymentService paymentService;

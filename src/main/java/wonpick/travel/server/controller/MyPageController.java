@@ -13,7 +13,7 @@ import wonpick.travel.server.service.MyPageService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/my")
+@RequestMapping("api/my")
 @RequiredArgsConstructor
 public class MyPageController {
 

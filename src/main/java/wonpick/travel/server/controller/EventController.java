@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/events")
+@RequestMapping("api/events")
 public class EventController {
 
     private final EventService eventService;
