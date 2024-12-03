@@ -47,7 +47,7 @@ public class PaymentController {
     }
 
 
-    @PostMapping("/payments/confirm")
+    @PostMapping("/confirm")
     public ResponseEntity<?> confirmPayment(@RequestBody PostPaymentConfirmRequest request) {
         logger.info("PaymentController.confirmPayment");
 
