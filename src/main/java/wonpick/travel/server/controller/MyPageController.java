@@ -12,7 +12,6 @@ import wonpick.travel.server.service.MyPageService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RestController
 @RequestMapping("/my")
 @RequiredArgsConstructor
@@ -182,6 +181,11 @@ public class MyPageController {
         try {
             String accessToken = authHeader.replace("Bearer ", "");
             Long passengerId = myPageService.createPassenger(accessToken, requestDTO);
+
+            logger.info("[travelwonpick] 탑승객 등록 성공: passengerId=" + passengerId +
+                    ", birth=" + requestDTO.getBirth() +
+                    ", gender=" + requestDTO.getGender());
+
             PostPassengerResponseDTO responseDTO = PostPassengerResponseDTO.builder()
                     .id(passengerId)
                     .build();

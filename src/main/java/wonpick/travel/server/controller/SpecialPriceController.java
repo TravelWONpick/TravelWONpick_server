@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173") // 프론트엔드 주소를 명시
 public class SpecialPriceController {
     private final SpecialPriceService specialPriceService;
     private final FlightService flightService;

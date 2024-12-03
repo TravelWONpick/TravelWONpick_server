@@ -4,17 +4,26 @@ spring:
     username: "${DATASOURCE_USERNAME}"
     password: "${DATASOURCE_PASSWORD}"
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 30 # 최대 커넥션 수 (적정값)
+      minimum-idle: 10 # 최소 유지할 커넥션 수
+      idle-timeout: 30000 # 커넥션이 사용되지 않을 경우 반환까지 대기 시간 (밀리초)
+      max-lifetime: 1800000 # 커넥션 최대 수명 (30분)
+      connection-timeout: 30000 # 커넥션을 가져오기까지 대기 시간 (밀리초)
+      pool-name: HikariCP # 커넥션 풀 이름
 
+  web:
+    resources:
+      add-mappings: false
 
   servlet:
     multipart:
       enabled: true
       max-file-size: 10MB
       max-request-size: 10MB
-
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     show-sql: true
     properties:
       hibernate:
@@ -29,6 +38,21 @@ server:
   servlet:
     session:
       timeout: 1h
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health,info,metrics
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    tags:
+      application: spring-deploy
+    export:
+      prometheus:
+        enabled: true
 
 logging:
   file:
@@ -55,3 +79,7 @@ toss:
   api:
     url: "${TOSS_API_URL}"
     widget-secret-key: "${TOSS_WIDGET_SECRET_KEY}"
+
+app:
+  cors:
+    allowed-origins: "${CORS_ALLOWED_ORIGINS}"

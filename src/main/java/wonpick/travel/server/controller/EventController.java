@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/events")
-@CrossOrigin(origins = "http://localhost:5173") // 프론트엔드 주소를 명시
 public class EventController {
 
     private final EventService eventService;

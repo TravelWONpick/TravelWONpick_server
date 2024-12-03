@@ -42,3 +42,4 @@ application-s3.yml
 application-cognito.yml
 application-toss.yml
 .env
+server-0.0.1-SNAPSHOT.jar
