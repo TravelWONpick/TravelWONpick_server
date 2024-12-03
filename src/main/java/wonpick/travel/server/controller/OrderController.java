@@ -14,6 +14,7 @@ import wonpick.travel.server.service.OrderService;
 @RestController
 @RequestMapping("/order")
 @RequiredArgsConstructor
+@RequestMapping("api")
 public class OrderController {
 
     private final OrderService orderService;

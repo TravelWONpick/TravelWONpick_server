@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
-@RequestMapping("/manager")
+@RequestMapping("api/manager")
 @RequiredArgsConstructor
 public class AdminController {
 
