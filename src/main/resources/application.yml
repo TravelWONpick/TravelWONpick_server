@@ -4,15 +4,24 @@ spring:
     username: "${DATASOURCE_USERNAME}"
     password: "${DATASOURCE_PASSWORD}"
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 30 # 최대 커넥션 수 (적정값)
+      minimum-idle: 10 # 최소 유지할 커넥션 수
+      idle-timeout: 30000 # 커넥션이 사용되지 않을 경우 반환까지 대기 시간 (밀리초)
+      max-lifetime: 1800000 # 커넥션 최대 수명 (30분)
+      connection-timeout: 30000 # 커넥션을 가져오기까지 대기 시간 (밀리초)
+      pool-name: HikariCP # 커넥션 풀 이름
+
   web:
     resources:
-      static-locations: classpath:/empty/
+      add-mappings: false
 
   servlet:
     multipart:
       enabled: true
       max-file-size: 10MB
       max-request-size: 10MB
+    context-path: /api
 
   jpa:
     hibernate:
