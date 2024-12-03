@@ -5,10 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import wonpick.travel.server.dto.*;
 import wonpick.travel.server.dto.BaseResponse;
 import wonpick.travel.server.service.PaymentService;
@@ -18,13 +15,14 @@ import java.time.format.DateTimeFormatter;
 
 
 @RestController
+@RequestMapping("/payments")
 @RequiredArgsConstructor
 public class PaymentController {
 
     private final PaymentService paymentService;
     private static final Logger logger = LogManager.getLogger(PaymentController.class);
 
-    @PostMapping("/payments/validate")
+    @PostMapping("/validate")
     public ResponseEntity<?> validatePayment(@RequestBody PostPaymentValidateRequest request) {
         logger.info("PaymentController.validatePayment");
 

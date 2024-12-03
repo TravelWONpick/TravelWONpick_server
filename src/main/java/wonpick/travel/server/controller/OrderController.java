@@ -12,6 +12,7 @@ import wonpick.travel.server.dto.PostOrderResponse;
 import wonpick.travel.server.service.OrderService;
 
 @RestController
+@RequestMapping("/order")
 @RequiredArgsConstructor
 public class OrderController {
 
@@ -19,7 +20,7 @@ public class OrderController {
     private static final Logger logger = LogManager.getLogger(OrderController.class);
 
     // 클라이언트로부터 주문 정보를 받아 임시 저장
-    @PostMapping("/order/create")
+    @PostMapping("/create")
     public ResponseEntity<?> createOrder(@RequestHeader("Authorization") String authHeader,
                                          @RequestBody PostOrderRequest postOrderRequest) {
         logger.info("OrderController.createOrder");
