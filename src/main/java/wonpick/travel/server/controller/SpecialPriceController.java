@@ -36,6 +36,7 @@ public class SpecialPriceController {
 
 
         logger.info(departureDate);
+        logger.info("[teavelwonpick] 특가픽 지역 조회 - " + arrAirportCode);
         List<FlightDTO> outboundFlights = flightService.searchFlights(spId, depAirportCode, arrAirportCode, departureDate);
 
         List<FlightDTO> returnFlights = flightService.searchFlights(spId, arrAirportCode, depAirportCode, arrivalDate);
