@@ -74,10 +74,10 @@ public class UserController {
     // 최종 회원가입 - DB 저장 API
     @PostMapping("/signup")
     public ResponseEntity<BaseResponse<PostSignupUserResponse>> signUpToDatabase(@RequestBody PostSignupUserRequest request) {
-        logger.info("[travelwonpick] 회원가입 요청 수신: 회원 이메일 - " + request.getEmail() + ", signuptime=" + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(ZonedDateTime.now()));
+        logger.info("[travelwonpick] 회원가입 요청 수신: 회원 이메일 - " + request.getEmail() + ", signuprequestime=" + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(ZonedDateTime.now()));
         try {
             userService.signUp(request);
-            logger.info("[travelwonpick] 회원가입 성공: 회원 이메일 - " + request.getEmail() + ", signuptime=" + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(ZonedDateTime.now()));
+            logger.info("[travelwonpick] 회원가입 성공: 회원 이메일 - " + request.getEmail() + ", signup=" + DateTimeFormatter.ofPattern("yyyy-MM-dd HH").format(ZonedDateTime.now()) + "시");
 
             PostSignupUserResponse response = new PostSignupUserResponse();
             response.setMessage("회원가입이 완료되었습니다.");
