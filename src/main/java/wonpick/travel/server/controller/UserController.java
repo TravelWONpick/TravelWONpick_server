@@ -84,7 +84,7 @@ public class UserController {
             return ResponseEntity.ok(BaseResponse.success(response));
 
         } catch (Exception e) {
-            logger.warn("[travelwonpick] 회원가입 실패: 회원 이메일 - " + request.getEmail() + ", 오류 - " + e.getMessage());
+            logger.warn("[travelwonpick] 회원가입 실패: 회원 이메일 - " + request.getEmail() + ", errorg - " + e.getMessage());
             return ResponseEntity.status(500).body(BaseResponse.failure("회원가입 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR));
         }
     }
