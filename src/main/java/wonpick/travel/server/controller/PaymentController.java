@@ -58,7 +58,7 @@ public class PaymentController {
             PostPaymentConfirmResponse response = paymentService.confirmPayment(request);
 
             logger.info("[travelwonpick] 결제 확인 성공: orderId=" + request.getOrderId() +
-                    ", 탑승객=" + request.getSeatCount());
+                    ", passenger=" + request.getSeatCount());
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
