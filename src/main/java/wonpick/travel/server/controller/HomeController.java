@@ -12,10 +12,9 @@ public class HomeController {
 
     private static final Logger logger = LogManager.getLogger(HomeController.class);
 
-    @GetMapping("/test")
-    public String hello() {
-        logger.info("[travelwonpick] test api 요청");
-        return "테스트입니다.";
+    @GetMapping("/")
+    public String home() {
+        logger.info("[travelwonpick] home api 요청");
+        return "redirect:/index.html";
     }
 }
-
